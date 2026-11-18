@@ -335,9 +335,8 @@ function applyLang(lang){
 }
 document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
 
-document.querySelectorAll('.pcard').forEach(b=>{
-  b.addEventListener('click',()=>{
-    const c=CARDS[b.dataset.card]; if(!c) return;
+function showCard(name){
+    const c=CARDS[name]; if(!c) return;
     const es=LANG==='es';
     const img=document.getElementById('m-img');
     img.src=es?(c.sl||c.si):(c.l||c.i);
@@ -347,6 +346,10 @@ document.querySelectorAll('.pcard').forEach(b=>{
     document.getElementById('m-meta').textContent=[c.m,c.t,rar,c.p?'('+c.p+')':''].filter(Boolean).join('  ·  ');
     document.getElementById('m-oracle').textContent=(es?(c.so||c.o):c.o)||'';
     dlg.showModal();
+}
+document.querySelectorAll('.pcard:not([data-select])').forEach(b=>{
+  b.addEventListener('click',()=>{
+    showCard(b.dataset.card);
   });
 });
 dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
