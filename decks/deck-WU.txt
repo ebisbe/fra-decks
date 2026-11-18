@@ -7,14 +7,14 @@ Deck
 1 Mindseeker Oculus
 1 Semester Foreseer
 1 Arni, Humble Scribe
-1 Surveillance Phantasm
+2 Surveillance Phantasm
 1 Teyo, Lightshield Expert
 1 Shatterwing Pegasus
 1 Saheeli, Consul of Oversight
 1 Thalia, the Survivor
 1 Fatehold Charm
 1 Countersculpt
-2 Icy Reception
+1 Icy Reception
 1 Unsummon
 1 Jace's Machinations
 1 Protege's Awakening

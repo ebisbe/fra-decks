@@ -17,6 +17,7 @@ Deck
 1 Infinite Coursework
 1 Theorist's Proxy
 1 Wrath of the Bloodmane
+1 Icy Reception
 8 Island
-8 Mountain
+7 Mountain
 1 Innovative Commons
