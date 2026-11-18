@@ -5,7 +5,8 @@ Deck
 1 Wrecking Gecko
 1 Jiang Yanggu, Never Alone
 1 Marwyn, the Preserver
-2 Sureshot Sower
+1 Sureshot Sower
+1 Marwyn, the Clearcutter
 1 Heartwood Crafter
 2 Arcane Amphisbaena
 1 Greenhouse Propagator

@@ -5,7 +5,7 @@ Deck
 1 Fblthp, Impossibly Lost
 1 Proft, Consulting Detective
 1 Mindseeker Oculus
-1 Divining Duelist
+1 Semester Foreseer
 1 Arni, Humble Scribe
 1 Surveillance Phantasm
 1 Teyo, Lightshield Expert

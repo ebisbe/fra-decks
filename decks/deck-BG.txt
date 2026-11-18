@@ -6,7 +6,7 @@ Deck
 1 Pia, Aether Ascetic
 1 Teyo, Diamondblade Mage
 1 Rank Rat
-1 Danitha, Spear of Agony
+1 Theoretical Necromancer
 1 Keeper of the Quiet Hour
 1 Bestial Incursion
 1 Afterthought Sentry
