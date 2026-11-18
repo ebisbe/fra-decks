@@ -1,5 +1,6 @@
 Deck
 2 Primal Witchstalker
+1 Blessed Ghoul
 1 Hapatra, the Desert Fang
 3 Budding Insurgent
 1 Pia, Aether Ascetic
@@ -17,5 +18,5 @@ Deck
 1 Restore with Empathy
 1 Way of the Deathbringer
 1 Last Gasp
-9 Forest
+8 Forest
 8 Swamp
