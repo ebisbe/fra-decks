@@ -1,0 +1,618 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Reality Fracture — Cartas sin usar / Unused cards</title><style>
+:root{--bg:#111316;--panel:#181b20;--panel2:#1e2228;--line:#2b3038;--txt:#e7e9ec;--dim:#9aa3af;--accent:#8b7cf6}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif}
+a{color:#a99cff}
+.wrap{max-width:1320px;margin:0 auto;padding:0 18px}
+header.top{position:sticky;top:0;z-index:50;background:rgba(17,19,22,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.top .inner{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:12px 0}
+h1{font-size:19px;margin:0;letter-spacing:.2px}
+h1 span{color:var(--dim);font-weight:500}
+.sub{margin:0;color:var(--dim);font-size:13px}
+nav{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+nav a{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--txt);font-size:13px;font-weight:600;background:var(--panel)}
+nav a:hover,nav a.active{border-color:var(--accent);color:#fff}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.lang{display:flex;margin-left:auto;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--panel)}
+.lang button{border:0;background:transparent;color:var(--dim);font:inherit;font-size:12px;font-weight:800;letter-spacing:.5px;padding:6px 11px;cursor:pointer}
+.lang button.on{background:var(--accent);color:#fff}
+.filters{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--panel)}
+.filters button{border:0;background:transparent;color:var(--dim);font:inherit;font-size:12px;font-weight:700;padding:6px 11px;cursor:pointer}
+.filters button.on{background:var(--accent);color:#fff}
+main{padding:26px 0 60px}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid #d9a441;border-radius:10px;padding:12px 16px;margin:0 0 26px;color:#cfd4db;font-size:14px}
+.note b{color:#f0d9a8}
+section.deck{background:var(--panel);border:1px solid var(--line);border-radius:16px;margin:0 0 28px;overflow:hidden;scroll-margin-top:122px}
+.deck-top{padding:20px 20px 0}
+.deck-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.deck-head h2{margin:0;font-size:23px;letter-spacing:.2px}
+.pair{font-size:13px;font-weight:700;letter-spacing:1.5px;color:var(--dim)}
+.tag{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.plan{color:#c3c9d2;font-size:14.5px;margin:8px 0 14px;max-width:900px}
+.stats{display:flex;gap:22px;flex-wrap:wrap;align-items:flex-end;margin:0 0 14px}
+.stat b{display:block;font-size:17px}
+.stat span{font-size:11.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.8px}
+.curve{display:flex;gap:5px;align-items:flex-end;height:46px}
+.curve .bar{width:22px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;height:100%}
+.curve .bar i{display:block;width:100%;background:linear-gradient(180deg,var(--accent),#4b3fa8);border-radius:3px 3px 0 0;min-height:2px}
+.curve .bar em{font-size:10px;color:var(--dim);font-style:normal}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.btn{cursor:pointer;font:inherit;font-size:13px;font-weight:600;padding:7px 13px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);text-decoration:none;display:inline-flex;gap:7px;align-items:center}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:linear-gradient(180deg,#5b4bd8,#4335b5);border-color:#6b5be8}
+.board{display:flex;gap:10px;align-items:flex-start;padding:0 20px 18px}
+.col{flex:1 1 0;min-width:0;overflow:hidden}
+.colhead{display:flex;align-items:center;gap:7px;margin:0 0 8px}
+.mv{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#22262d;border:1px solid #3a404a;color:#fff;font-weight:800;font-size:13px;flex:0 0 auto}
+.colhead .cnt{font-size:12px;color:var(--dim);letter-spacing:.3px}
+.col.lands{border-left:1px solid var(--line);padding-left:12px}
+.col.lands .mv{background:#171a1f;width:auto;padding:0 9px;border-radius:8px;font-size:11px;letter-spacing:1px;color:var(--dim);text-transform:uppercase}
+.pile{display:flex;flex-direction:column;gap:3px}
+.type-label,.pile.typed{display:none}
+.board.split{display:grid;grid-template-columns:repeat(var(--columns),minmax(0,1fr));row-gap:10px;align-items:stretch}
+.board.split>.col{display:grid;grid-template-rows:subgrid;grid-row:1 / 6;align-items:start}
+.board.split .colhead{grid-row:1;margin:0}
+.board.split .mixed{display:none}
+.board.split .type-label{display:block;color:var(--dim);font-size:11px;border-top:1px solid var(--line);padding-top:7px}
+.board.split .creatures-label{grid-row:2}
+.board.split .spells-label{grid-row:4}
+.board.split .pile.typed{display:flex}
+.board.split .pile[data-type="creature"]{grid-row:3}
+.board.split .pile[data-type="spell"]{grid-row:5}
+.board.split .lands>.pile{grid-row:3 / 6}
+.prow{display:flex;align-items:flex-start;gap:4px}
+.pcard{flex:1 1 auto;min-width:0;padding:0;border:0;background:#0b0d10;border-radius:7px;overflow:hidden;cursor:zoom-in;line-height:0}
+.pcard:hover{filter:brightness(1.2)}
+.pcard .clip{display:block;height:46px;overflow:hidden}
+.pcard.full .clip{height:auto}
+.pcard img{width:100%;height:auto;display:block}
+.q{flex:0 0 22px;padding-top:6px;font-size:11.5px;font-weight:800;color:#dfe3e8;line-height:1}
+.sb{padding:0 20px 20px}
+.sb h3{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--dim);margin:0 0 8px}
+.sb ul{margin:0;padding-left:18px;color:#c3c9d2;font-size:14px}
+.sb li{margin:3px 0}
+.sb li b{color:var(--txt)}
+footer{border-top:1px solid var(--line);padding:24px 0 40px;color:var(--dim);font-size:13px}
+dialog{border:0;padding:0;background:transparent;max-width:min(92vw,440px);max-height:92vh}
+dialog::backdrop{background:#000c}
+dialog .box{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:auto;max-height:92vh}
+dialog img{width:100%;max-height:64vh;object-fit:contain;display:block;background:#0b0d10}
+dialog .info{padding:14px 16px}
+dialog h3{margin:0 0 4px;font-size:17px}
+dialog .meta{color:var(--dim);font-size:12.5px;margin:0 0 8px}
+dialog .oracle{white-space:pre-wrap;font-size:14px;color:#d3d8df}
+dialog .close{position:absolute;top:10px;right:10px}
+.dialogwrap{position:relative}
+@media (max-width:900px){.board{overflow-x:auto;padding-bottom:14px}.col{flex:0 0 132px;min-width:132px}.board.split{grid-template-columns:repeat(var(--columns),132px)}}
+@media (max-width:640px){.stats{gap:14px}h1{font-size:16px}nav{width:100%;margin-left:0}.lang{margin-left:0}}
+
+    .search-panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+    .controls{display:grid;grid-template-columns:minmax(180px,2fr) 1fr 1fr auto;gap:12px;align-items:end}
+    .controls label{display:flex;flex-direction:column;gap:5px;color:var(--dim);font-size:13px}
+    .controls input,.controls select{font:inherit;color:var(--txt);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;min-width:0}
+    .help,.result-count{color:var(--dim);font-size:13px;margin:12px 0 0}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:22px 16px;align-items:start}
+    .inventory-card[hidden],#empty[hidden]{display:none}
+    .gallery .pcard{display:block;width:100%;border-radius:10px}
+    .gallery .pcard img{aspect-ratio:63/88;object-fit:contain}
+    .inventory-card h2{font-size:13px;line-height:1.4;margin:8px 0 4px}
+    .availability{display:flex;flex-direction:column;font-size:12px;gap:3px}
+    .availability>span{color:var(--dim)}
+    #empty{text-align:center;padding:50px 10px;color:var(--dim)}
+    @media(max-width:700px){.controls{grid-template-columns:1fr 1fr}.controls .query{grid-column:1/-1}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}}
+    </style></head>
+    <body><header class="top"><div class="wrap inner">
+      <div><h1>Reality Fracture <span data-en="— unused cards" data-es="— cartas sin usar">— cartas sin usar</span></h1>
+        <p class="sub" data-en="Roc + Uri + Enric · Remaining copies after building all seven decks" data-es="Roc + Uri + Enric · Copias restantes tras construir los siete mazos">Roc + Uri + Enric · Copias restantes tras construir los siete mazos</p></div>
+      <a class="btn" href="index.html" data-en="Decks" data-es="Mazos">Mazos</a>
+      <a class="btn primary" href="leftovers.html" aria-current="page" data-en="Unused cards" data-es="Cartas sin usar">Cartas sin usar</a>
+      <div class="lang" role="group" aria-label="Language"><button data-lang="en">EN</button><button data-lang="es" class="on">ES</button></div>
+    </div></header>
+    <main class="wrap">
+      <div class="search-panel"><div class="controls">
+        <label class="query"><span data-en="Name or rules text (EN / ES)" data-es="Nombre o texto de reglas (EN / ES)">Nombre o texto de reglas (EN / ES)</span>
+          <input id="search" type="search" autocomplete="off" placeholder="trample / arrollar…"></label>
+        <label><span data-en="Colour" data-es="Color">Color</span><select id="color"><option value="all" data-en="Any colour" data-es="Cualquier color">Cualquier color</option><option value="W" data-en="White" data-es="Blanco">Blanco</option><option value="U" data-en="Blue" data-es="Azul">Azul</option><option value="B" data-en="Black" data-es="Negro">Negro</option><option value="R" data-en="Red" data-es="Rojo">Rojo</option><option value="G" data-en="Green" data-es="Verde">Verde</option><option value="C" data-en="Colourless" data-es="Incoloro">Incoloro</option><option value="multi" data-en="Multicolour / hybrid" data-es="Multicolor / híbrido">Multicolor / híbrido</option></select></label>
+        <label><span data-en="Mana value" data-es="Valor de maná">Valor de maná</span><select id="cost"><option value="all" data-en="Any cost" data-es="Cualquier coste">Cualquier coste</option><option value="0" data-en="0" data-es="0">0</option><option value="1" data-en="1" data-es="1">1</option><option value="2" data-en="2" data-es="2">2</option><option value="3" data-en="3" data-es="3">3</option><option value="4" data-en="4" data-es="4">4</option><option value="5" data-en="5" data-es="5">5</option><option value="6" data-en="6" data-es="6">6</option><option value="7" data-en="7" data-es="7">7</option><option value="8" data-en="8" data-es="8">8</option><option value="9" data-en="9" data-es="9">9</option><option value="10+" data-en="10+" data-es="10+">10+</option></select></label>
+        <button class="btn" id="reset" data-en="Reset filters" data-es="Limpiar filtros">Limpiar filtros</button>
+      </div>
+      <p class="help" data-en="Filters combine. Names and rules text are searched in both languages, ignoring accents. Hybrid cards match either colour; lands use their mana colours. X counts as 0, prepared cards use their creature cost; lands have no mana value filter. Basic lands are excluded." data-es="Los filtros se combinan. Busca nombres y reglas en ambos idiomas, sin importar las tildes. Las híbridas coinciden con cualquiera de sus colores; las tierras usan los colores de su maná. X cuenta como 0 y las preparadas usan el coste de criatura; las tierras solo salen con cualquier coste. Se excluyen las tierras básicas.">Los filtros se combinan. Busca nombres y reglas en ambos idiomas, sin importar las tildes. Las híbridas coinciden con cualquiera de sus colores; las tierras usan los colores de su maná. X cuenta como 0 y las preparadas usan el coste de criatura; las tierras solo salen con cualquier coste. Se excluyen las tierras básicas.</p>
+      <p id="results" class="result-count" role="status" aria-live="polite">50 cartas distintas · 65 copias sin usar</p></div>
+      <div class="gallery"><article class="inventory-card" data-name="Artifist Acumen">
+          <button class="pcard" data-card="Artifist Acumen" title="Dominio del puñilugio">
+            <img src="https://cards.scryfall.io/grid/front/d/8/d87a37a4-4403-4b80-9412-8fbf02e75ee4.webp?1790682974" data-src-en="https://cards.scryfall.io/grid/front/7/d/7d3b720d-f27c-462a-8f80-15748e5086e1.webp?1789729762" data-src-es="https://cards.scryfall.io/grid/front/d/8/d87a37a4-4403-4b80-9412-8fbf02e75ee4.webp?1790682974"
+              alt="Dominio del puñilugio" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Artifist Acumen" data-es="Dominio del puñilugio">Dominio del puñilugio</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Eye of Jace">
+          <button class="pcard" data-card="Eye of Jace" title="Ojo de Jace">
+            <img src="https://cards.scryfall.io/grid/front/6/6/66c30ad2-abd8-4912-bd18-3d5d53813df8.webp?1790685785" data-src-en="https://cards.scryfall.io/grid/front/0/e/0edba64a-39cf-4a8d-ba20-4f7da10b6c3d.webp?1789614864" data-src-es="https://cards.scryfall.io/grid/front/6/6/66c30ad2-abd8-4912-bd18-3d5d53813df8.webp?1790685785"
+              alt="Ojo de Jace" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Eye of Jace" data-es="Ojo de Jace">Ojo de Jace</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Marwyn, the Clearcutter">
+          <button class="pcard" data-card="Marwyn, the Clearcutter" title="Marwyn, la Taladora">
+            <img src="https://cards.scryfall.io/grid/front/8/c/8ca1df2c-5c40-4cd6-af5d-03219b907495.webp?1790687993" data-src-en="https://cards.scryfall.io/grid/front/f/9/f93da73c-ca8b-438e-8387-6109dac3fc1a.webp?1789644549" data-src-es="https://cards.scryfall.io/grid/front/8/c/8ca1df2c-5c40-4cd6-af5d-03219b907495.webp?1790687993"
+              alt="Marwyn, la Taladora" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Marwyn, the Clearcutter" data-es="Marwyn, la Taladora">Marwyn, la Taladora</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Tethermage&#x27;s Advantage">
+          <button class="pcard" data-card="Tethermage&#x27;s Advantage" title="Ventaja de atadurista">
+            <img src="https://cards.scryfall.io/grid/front/3/6/36ea6a36-fbe4-4907-a37c-030101b5cbb4.webp?1790684313" data-src-en="https://cards.scryfall.io/grid/front/3/8/38589a7c-9cfb-4bcc-845e-9dc205095853.webp?1789129937" data-src-es="https://cards.scryfall.io/grid/front/3/6/36ea6a36-fbe4-4907-a37c-030101b5cbb4.webp?1790684313"
+              alt="Ventaja de atadurista" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Tethermage&#x27;s Advantage" data-es="Ventaja de atadurista">Ventaja de atadurista</h2>
+          <div class="availability"><strong>×3 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>3 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Academic Ascent">
+          <button class="pcard" data-card="Academic Ascent" title="Ascenso académico">
+            <img src="https://cards.scryfall.io/grid/front/8/5/85fd599f-8a3e-40fe-a06e-7eeb8771f6b9.webp?1790680807" data-src-en="https://cards.scryfall.io/grid/front/7/3/730d8c28-1e58-4b8e-89e9-445d154d2e83.webp?1788878081" data-src-es="https://cards.scryfall.io/grid/front/8/5/85fd599f-8a3e-40fe-a06e-7eeb8771f6b9.webp?1790680807"
+              alt="Ascenso académico" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Academic Ascent" data-es="Ascenso académico">Ascenso académico</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Afterthought Sentry">
+          <button class="pcard" data-card="Afterthought Sentry" title="Centinela tardío">
+            <img src="https://cards.scryfall.io/grid/front/5/7/57dc3469-982c-4788-93ea-207b30689ccf.webp?1790685673" data-src-en="https://cards.scryfall.io/grid/front/4/d/4d4b3bf7-a149-4099-b97d-4e36a87dfa60.webp?1789385875" data-src-es="https://cards.scryfall.io/grid/front/5/7/57dc3469-982c-4788-93ea-207b30689ccf.webp?1790685673"
+              alt="Centinela tardío" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Afterthought Sentry" data-es="Centinela tardío">Centinela tardío</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Campus Crier">
+          <button class="pcard" data-card="Campus Crier" title="Pregonero del campus">
+            <img src="https://cards.scryfall.io/grid/front/d/8/d8d80bc5-77ce-4e4b-863c-46c2381074b5.webp?1790680889" data-src-en="https://cards.scryfall.io/grid/front/6/0/6047b14c-91d5-4f8e-af3f-057a541e2546.webp?1788878120" data-src-es="https://cards.scryfall.io/grid/front/d/8/d8d80bc5-77ce-4e4b-863c-46c2381074b5.webp?1790680889"
+              alt="Pregonero del campus" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Campus Crier" data-es="Pregonero del campus">Pregonero del campus</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Edgar, Ancient Bloodlord">
+          <button class="pcard" data-card="Edgar, Ancient Bloodlord" title="Edgar, señor sangriento anciano">
+            <img src="https://cards.scryfall.io/grid/front/9/f/9fdf3e0c-d3a2-4e00-bc4c-44069465ead5.webp?1790688575" data-src-en="https://cards.scryfall.io/grid/front/7/c/7c619fed-2394-4efc-8cdc-6df5f51c1f57.webp?1789127743" data-src-es="https://cards.scryfall.io/grid/front/9/f/9fdf3e0c-d3a2-4e00-bc4c-44069465ead5.webp?1790688575"
+              alt="Edgar, señor sangriento anciano" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Edgar, Ancient Bloodlord" data-es="Edgar, señor sangriento anciano">Edgar, señor sangriento anciano</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Essence Burn">
+          <button class="pcard" data-card="Essence Burn" title="Quemar la esencia">
+            <img src="https://cards.scryfall.io/grid/front/4/2/424ecd65-3814-4939-ac2c-2627821fe2fc.webp?1790683301" data-src-en="https://cards.scryfall.io/grid/front/d/2/d2e958de-70de-4156-8f9b-b2c0c1ba704a.webp?1789470825" data-src-es="https://cards.scryfall.io/grid/front/4/2/424ecd65-3814-4939-ac2c-2627821fe2fc.webp?1790683301"
+              alt="Quemar la esencia" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Essence Burn" data-es="Quemar la esencia">Quemar la esencia</h2>
+          <div class="availability"><strong>×3 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>3 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Extrapolate the Impossible">
+          <button class="pcard" data-card="Extrapolate the Impossible" title="Extrapolar lo imposible">
+            <img src="https://cards.scryfall.io/grid/front/6/c/6c8fd009-146a-4e58-b035-7823d4dcce99.webp?1790682495" data-src-en="https://cards.scryfall.io/grid/front/1/7/17fb6538-493c-41aa-ad13-3e63d3ad3317.webp?1789729624" data-src-es="https://cards.scryfall.io/grid/front/6/c/6c8fd009-146a-4e58-b035-7823d4dcce99.webp?1790682495"
+              alt="Extrapolar lo imposible" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Extrapolate the Impossible" data-es="Extrapolar lo imposible">Extrapolar lo imposible</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Gallia, the Merrymaker">
+          <button class="pcard" data-card="Gallia, the Merrymaker" title="Galia, juerguista">
+            <img src="https://cards.scryfall.io/grid/front/2/d/2d6aba86-f533-4fee-9276-453c9382f2ad.webp?1790687886" data-src-en="https://cards.scryfall.io/grid/front/f/2/f27d50f0-d76e-4ce1-a8d9-d997af6a5b41.webp?1791192275" data-src-es="https://cards.scryfall.io/grid/front/2/d/2d6aba86-f533-4fee-9276-453c9382f2ad.webp?1790687886"
+              alt="Galia, juerguista" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Gallia, the Merrymaker" data-es="Galia, juerguista">Galia, juerguista</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Gideon&#x27;s Memorial">
+          <button class="pcard" data-card="Gideon&#x27;s Memorial" title="Monumento a Gideon">
+            <img src="https://cards.scryfall.io/grid/front/0/9/09ae8364-7684-4bd6-9df8-0942ebf75268.webp?1790686546" data-src-en="https://cards.scryfall.io/grid/front/7/6/768c0e64-9907-417a-a763-c836fdf36883.webp?1789127685" data-src-es="https://cards.scryfall.io/grid/front/0/9/09ae8364-7684-4bd6-9df8-0942ebf75268.webp?1790686546"
+              alt="Monumento a Gideon" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Gideon&#x27;s Memorial" data-es="Monumento a Gideon">Monumento a Gideon</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Karn, Argent Defender">
+          <button class="pcard" data-card="Karn, Argent Defender" title="Karn, defensor argénteo">
+            <img src="https://cards.scryfall.io/grid/front/4/2/4271af8b-7f3e-407b-bbcb-05df3bf1200a.webp?1790688826" data-src-en="https://cards.scryfall.io/grid/front/1/e/1ebbbddb-2dc3-4194-b72b-13bcebe2ab89.webp?1788878301" data-src-es="https://cards.scryfall.io/grid/front/4/2/4271af8b-7f3e-407b-bbcb-05df3bf1200a.webp?1790688826"
+              alt="Karn, defensor argénteo" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Karn, Argent Defender" data-es="Karn, defensor argénteo">Karn, defensor argénteo</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Living Library">
+          <button class="pcard" data-card="Living Library" title="Biblioteca viva">
+            <img src="https://cards.scryfall.io/grid/front/b/3/b358eb02-ba60-4263-8630-c16358833151.webp?1790685839" data-src-en="https://cards.scryfall.io/grid/front/5/d/5d4a8e5f-0024-4da3-a2f5-edb48b12e733.webp?1789556949" data-src-es="https://cards.scryfall.io/grid/front/b/3/b358eb02-ba60-4263-8630-c16358833151.webp?1790685839"
+              alt="Biblioteca viva" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Living Library" data-es="Biblioteca viva">Biblioteca viva</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Medic&#x27;s Kitesail">
+          <button class="pcard" data-card="Medic&#x27;s Kitesail" title="Velacometa médica">
+            <img src="https://cards.scryfall.io/grid/front/7/f/7f78bab1-591e-4dee-9389-5fcb6501c1ae.webp?1790685864" data-src-en="https://cards.scryfall.io/grid/front/8/b/8b07409a-1dce-461d-95e4-1130521ff4c4.webp?1789556945" data-src-es="https://cards.scryfall.io/grid/front/7/f/7f78bab1-591e-4dee-9389-5fcb6501c1ae.webp?1790685864"
+              alt="Velacometa médica" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Medic&#x27;s Kitesail" data-es="Velacometa médica">Velacometa médica</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Precise Redaction">
+          <button class="pcard" data-card="Precise Redaction" title="Censurar con precisión">
+            <img src="https://cards.scryfall.io/grid/front/7/a/7a0bc0c8-2bb7-4215-82ae-04662a0af218.webp?1790681949" data-src-en="https://cards.scryfall.io/grid/front/9/2/9244efad-35ab-45c0-b173-4bc68276cb67.webp?1789470790" data-src-es="https://cards.scryfall.io/grid/front/7/a/7a0bc0c8-2bb7-4215-82ae-04662a0af218.webp?1790681949"
+              alt="Censurar con precisión" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Precise Redaction" data-es="Censurar con precisión">Censurar con precisión</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Predictive Preparations">
+          <button class="pcard" data-card="Predictive Preparations" title="Preparaciones predictivas">
+            <img src="https://cards.scryfall.io/grid/front/3/5/35990bee-ee4b-43b2-8433-2da80d566eef.webp?1790681283" data-src-en="https://cards.scryfall.io/grid/front/5/0/50a0e5f0-3c39-4f16-9a73-eec8ef71f12e.webp?1789556696" data-src-es="https://cards.scryfall.io/grid/front/3/5/35990bee-ee4b-43b2-8433-2da80d566eef.webp?1790681283"
+              alt="Preparaciones predictivas" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Predictive Preparations" data-es="Preparaciones predictivas">Preparaciones predictivas</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Proft, Consulting Detective">
+          <button class="pcard" data-card="Proft, Consulting Detective" title="Proft, detective independiente">
+            <img src="https://cards.scryfall.io/grid/front/5/4/54056cef-8f6f-44dc-86ff-ee4ebf1c631f.webp?1790687125" data-src-en="https://cards.scryfall.io/grid/front/b/8/b8466593-40fe-4557-89b2-760c1c92087b.webp?1789127178" data-src-es="https://cards.scryfall.io/grid/front/5/4/54056cef-8f6f-44dc-86ff-ee4ebf1c631f.webp?1790687125"
+              alt="Proft, detective independiente" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Proft, Consulting Detective" data-es="Proft, detective independiente">Proft, detective independiente</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Solitary Cell">
+          <button class="pcard" data-card="Solitary Cell" title="Celda solitaria">
+            <img src="https://cards.scryfall.io/grid/front/f/4/f49d864e-2b39-4ff7-8a3e-6eef62ae5def.webp?1790685206" data-src-en="https://cards.scryfall.io/grid/front/5/1/5142bbb6-194c-4b12-b11a-1a21c9fe81a6.webp?1790558834" data-src-es="https://cards.scryfall.io/grid/front/f/4/f49d864e-2b39-4ff7-8a3e-6eef62ae5def.webp?1790685206"
+              alt="Celda solitaria" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Solitary Cell" data-es="Celda solitaria">Celda solitaria</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Sureshot Sower">
+          <button class="pcard" data-card="Sureshot Sower" title="Sembradora tirocertero">
+            <img src="https://cards.scryfall.io/grid/front/1/d/1da29332-25b8-48ca-8091-7460dedd9c26.webp?1790684234" data-src-en="https://cards.scryfall.io/grid/front/b/6/b635389c-e286-4edb-80d1-23dbe4a18857.webp?1789614751" data-src-es="https://cards.scryfall.io/grid/front/1/d/1da29332-25b8-48ca-8091-7460dedd9c26.webp?1790684234"
+              alt="Sembradora tirocertero" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Sureshot Sower" data-es="Sembradora tirocertero">Sembradora tirocertero</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Surveillance Phantasm">
+          <button class="pcard" data-card="Surveillance Phantasm" title="Fantasma escrutador">
+            <img src="https://cards.scryfall.io/grid/front/e/3/e3f09800-1ee2-4706-b369-49cf5c658f02.webp?1790682161" data-src-en="https://cards.scryfall.io/grid/front/9/d/9df8a06d-c7de-49af-8c01-06dca3dfef4b.webp?1789385597" data-src-es="https://cards.scryfall.io/grid/front/e/3/e3f09800-1ee2-4706-b369-49cf5c658f02.webp?1790682161"
+              alt="Fantasma escrutador" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Surveillance Phantasm" data-es="Fantasma escrutador">Fantasma escrutador</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Tam&#x27;s Resistance">
+          <button class="pcard" data-card="Tam&#x27;s Resistance" title="Resistencia de Tam">
+            <img src="https://cards.scryfall.io/grid/front/f/0/f0a8a0ae-00e5-4c40-8582-5cd30ebb50c1.webp?1790685315" data-src-en="https://cards.scryfall.io/grid/front/b/3/b3d33df2-a77b-4c2e-ba7f-2cc9c1505f9b.webp?1788878215" data-src-es="https://cards.scryfall.io/grid/front/f/0/f0a8a0ae-00e5-4c40-8582-5cd30ebb50c1.webp?1790685315"
+              alt="Resistencia de Tam" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Tam&#x27;s Resistance" data-es="Resistencia de Tam">Resistencia de Tam</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Terminal Criticism">
+          <button class="pcard" data-card="Terminal Criticism" title="Crítica fulminante">
+            <img src="https://cards.scryfall.io/grid/front/0/e/0e0e0db5-98bc-4aa3-adab-dd12ddd074b0.webp?1790682851" data-src-en="https://cards.scryfall.io/grid/front/7/e/7ebd7e38-b27c-4c6e-aaea-e8ee5ba5e5df.webp?1789470810" data-src-es="https://cards.scryfall.io/grid/front/0/e/0e0e0db5-98bc-4aa3-adab-dd12ddd074b0.webp?1790682851"
+              alt="Crítica fulminante" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Terminal Criticism" data-es="Crítica fulminante">Crítica fulminante</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Tomik, Orzhov Lawmage">
+          <button class="pcard" data-card="Tomik, Orzhov Lawmage" title="Tomik, mago de la ley orzhov">
+            <img src="https://cards.scryfall.io/grid/front/a/c/ac3e97e6-9d70-49d2-9589-8077249a5f9e.webp?1790686760" data-src-en="https://cards.scryfall.io/grid/front/7/c/7ca95235-6e54-4ff8-bc2e-6a3d483ff007.webp?1789729766" data-src-es="https://cards.scryfall.io/grid/front/a/c/ac3e97e6-9d70-49d2-9589-8077249a5f9e.webp?1790686760"
+              alt="Tomik, mago de la ley orzhov" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Tomik, Orzhov Lawmage" data-es="Tomik, mago de la ley orzhov">Tomik, mago de la ley orzhov</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Way of the Pyromancer">
+          <button class="pcard" data-card="Way of the Pyromancer" title="Senda de la piromante">
+            <img src="https://cards.scryfall.io/grid/front/e/3/e339cc9b-1343-4bb1-900d-3b5a91a8f4ca.webp?1790688148" data-src-en="https://cards.scryfall.io/grid/front/c/1/c1a00020-7c14-4503-a057-5763704bb83e.webp?1788878311" data-src-es="https://cards.scryfall.io/grid/front/e/3/e339cc9b-1343-4bb1-900d-3b5a91a8f4ca.webp?1790688148"
+              alt="Senda de la piromante" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Way of the Pyromancer" data-es="Senda de la piromante">Senda de la piromante</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Charge the Sanctum">
+          <button class="pcard" data-card="Charge the Sanctum" title="Atacar el Santuario">
+            <img src="https://cards.scryfall.io/grid/front/5/d/5d801cfe-e989-40e6-8541-d47c773d5dbc.webp?1790684548" data-src-en="https://cards.scryfall.io/grid/front/8/7/87b40df5-5c0a-41f5-a09c-a04f17066a91.webp?1788521570" data-src-es="https://cards.scryfall.io/grid/front/5/d/5d801cfe-e989-40e6-8541-d47c773d5dbc.webp?1790684548"
+              alt="Atacar el Santuario" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Charge the Sanctum" data-es="Atacar el Santuario">Atacar el Santuario</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Danitha, Spear of Agony">
+          <button class="pcard" data-card="Danitha, Spear of Agony" title="Danitha, Lanza de Agonía">
+            <img src="https://cards.scryfall.io/grid/front/2/5/257807c2-2fcd-4a7b-9b8f-9acb0f52f81b.webp?1790687378" data-src-en="https://cards.scryfall.io/grid/front/6/4/6489814b-3d10-423e-988c-324740d36748.webp?1789127194" data-src-es="https://cards.scryfall.io/grid/front/2/5/257807c2-2fcd-4a7b-9b8f-9acb0f52f81b.webp?1790687378"
+              alt="Danitha, Lanza de Agonía" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Danitha, Spear of Agony" data-es="Danitha, Lanza de Agonía">Danitha, Lanza de Agonía</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Germinate Recruits">
+          <button class="pcard" data-card="Germinate Recruits" title="Germinar reclutas">
+            <img src="https://cards.scryfall.io/grid/front/b/4/b489957c-1503-41fb-8b98-5e2ed592baf3.webp?1790681050" data-src-en="https://cards.scryfall.io/grid/front/1/b/1b5d7d19-b32a-4786-ae9a-00da5e6658ad.webp?1789644810" data-src-es="https://cards.scryfall.io/grid/front/b/4/b489957c-1503-41fb-8b98-5e2ed592baf3.webp?1790681050"
+              alt="Germinar reclutas" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Germinate Recruits" data-es="Germinar reclutas">Germinar reclutas</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Graft Surgeon">
+          <button class="pcard" data-card="Graft Surgeon" title="Cirujana de injertos">
+            <img src="https://cards.scryfall.io/grid/front/e/f/ef1c214f-3d90-45e6-8837-744be9fe2d9b.webp?1790681081" data-src-en="https://cards.scryfall.io/grid/front/3/2/32a7a905-11bf-4b66-a28e-1066a0e372b8.webp?1789644811" data-src-es="https://cards.scryfall.io/grid/front/e/f/ef1c214f-3d90-45e6-8837-744be9fe2d9b.webp?1790681081"
+              alt="Cirujana de injertos" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Graft Surgeon" data-es="Cirujana de injertos">Cirujana de injertos</h2>
+          <div class="availability"><strong>×3 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>3 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Inspired Tethermage">
+          <button class="pcard" data-card="Inspired Tethermage" title="Atadurista con inspiración">
+            <img src="https://cards.scryfall.io/grid/front/0/3/03d62c17-a8b6-4d90-867c-78907dd7b76a.webp?1790684046" data-src-en="https://cards.scryfall.io/grid/front/0/7/073f4998-a204-447b-93d5-746ae87fd6a1.webp?1788878192" data-src-es="https://cards.scryfall.io/grid/front/0/3/03d62c17-a8b6-4d90-867c-78907dd7b76a.webp?1790684046"
+              alt="Atadurista con inspiración" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Inspired Tethermage" data-es="Atadurista con inspiración">Atadurista con inspiración</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Mabel, Valley Hero">
+          <button class="pcard" data-card="Mabel, Valley Hero" title="Mabel, heroína de Vallis">
+            <img src="https://cards.scryfall.io/grid/front/8/9/898bb399-9f22-4157-9283-bac694956b85.webp?1790688692" data-src-en="https://cards.scryfall.io/grid/front/4/7/47abea4b-9848-48aa-bc1b-f04f4799e920.webp?1790135467" data-src-es="https://cards.scryfall.io/grid/front/8/9/898bb399-9f22-4157-9283-bac694956b85.webp?1790688692"
+              alt="Mabel, heroína de Vallis" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Mabel, Valley Hero" data-es="Mabel, heroína de Vallis">Mabel, heroína de Vallis</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Murmuring Volume">
+          <button class="pcard" data-card="Murmuring Volume" title="Volumen murmurante">
+            <img src="https://cards.scryfall.io/grid/front/8/7/8775f9ff-6965-44b7-8362-c4e4f1bb2ff4.webp?1790685890" data-src-en="https://cards.scryfall.io/grid/front/d/6/d68eab2e-89dd-4377-b7af-01512b1804a0.webp?1789385977" data-src-es="https://cards.scryfall.io/grid/front/8/7/8775f9ff-6965-44b7-8362-c4e4f1bb2ff4.webp?1790685890"
+              alt="Volumen murmurante" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Murmuring Volume" data-es="Volumen murmurante">Volumen murmurante</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Rescue Girl, First Responder">
+          <button class="pcard" data-card="Rescue Girl, First Responder" title="La Niña Rescate, socorrista">
+            <img src="https://cards.scryfall.io/grid/front/e/b/ebb5b98b-391a-487d-9aeb-acd9053f9a3d.webp?1790686653" data-src-en="https://cards.scryfall.io/grid/front/6/9/699874e3-1ccf-4a6c-8371-61040de82d08.webp?1789645598" data-src-es="https://cards.scryfall.io/grid/front/e/b/ebb5b98b-391a-487d-9aeb-acd9053f9a3d.webp?1790686653"
+              alt="La Niña Rescate, socorrista" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Rescue Girl, First Responder" data-es="La Niña Rescate, socorrista">La Niña Rescate, socorrista</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Shatterwing Pegasus">
+          <button class="pcard" data-card="Shatterwing Pegasus" title="Pegaso de alas quebradas">
+            <img src="https://cards.scryfall.io/grid/front/6/b/6baa80d8-41ff-4b3b-8343-cc1c30e18641.webp?1790681467" data-src-en="https://cards.scryfall.io/grid/front/e/2/e29095de-59ec-4562-ba8e-73f952e457ae.webp?1789385580" data-src-es="https://cards.scryfall.io/grid/front/6/b/6baa80d8-41ff-4b3b-8343-cc1c30e18641.webp?1790681467"
+              alt="Pegaso de alas quebradas" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Shatterwing Pegasus" data-es="Pegaso de alas quebradas">Pegaso de alas quebradas</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Way of the Mentor">
+          <button class="pcard" data-card="Way of the Mentor" title="Senda del mentor">
+            <img src="https://cards.scryfall.io/grid/front/2/4/2455b8ed-fa88-47ac-ac7c-74fc86247597.webp?1790686810" data-src-en="https://cards.scryfall.io/grid/front/1/a/1a59d5b1-12d6-486b-bd29-ca371359addd.webp?1789729554" data-src-es="https://cards.scryfall.io/grid/front/2/4/2455b8ed-fa88-47ac-ac7c-74fc86247597.webp?1790686810"
+              alt="Senda del mentor" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Way of the Mentor" data-es="Senda del mentor">Senda del mentor</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Way of the Warlord">
+          <button class="pcard" data-card="Way of the Warlord" title="Senda del señor de la guerra">
+            <img src="https://cards.scryfall.io/grid/front/9/4/94c8e2b3-e12e-4d64-b2c3-583399ef5e4a.webp?1790688172" data-src-en="https://cards.scryfall.io/grid/front/6/d/6d86e410-20c4-4248-96bf-5780ece6274a.webp?1789729585" data-src-es="https://cards.scryfall.io/grid/front/9/4/94c8e2b3-e12e-4d64-b2c3-583399ef5e4a.webp?1790688172"
+              alt="Senda del señor de la guerra" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Way of the Warlord" data-es="Senda del señor de la guerra">Senda del señor de la guerra</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Arni, Renowned Champion">
+          <button class="pcard" data-card="Arni, Renowned Champion" title="Arni, campeón de renombre">
+            <img src="https://cards.scryfall.io/grid/front/9/3/934db437-8921-473f-92c9-982961b15e70.webp?1790687834" data-src-en="https://cards.scryfall.io/grid/front/b/d/bd8db649-1dba-457d-8327-e1f1da1aab36.webp?1789557035" data-src-es="https://cards.scryfall.io/grid/front/9/3/934db437-8921-473f-92c9-982961b15e70.webp?1790687834"
+              alt="Arni, campeón de renombre" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Arni, Renowned Champion" data-es="Arni, campeón de renombre">Arni, campeón de renombre</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Warrior&#x27;s Blades">
+          <button class="pcard" data-card="Warrior&#x27;s Blades" title="Hojas de guerrero">
+            <img src="https://cards.scryfall.io/grid/front/3/3/33fdc186-f81e-44e0-8990-18058e6cd454.webp?1790685585" data-src-en="https://cards.scryfall.io/grid/front/c/6/c63d5b0e-ee72-42ed-aa7e-484ba84507cd.webp?1789007648" data-src-es="https://cards.scryfall.io/grid/front/3/3/33fdc186-f81e-44e0-8990-18058e6cd454.webp?1790685585"
+              alt="Hojas de guerrero" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Warrior&#x27;s Blades" data-es="Hojas de guerrero">Hojas de guerrero</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Entrust the Spark">
+          <button class="pcard" data-card="Entrust the Spark" title="Confiar la chispa">
+            <img src="https://cards.scryfall.io/grid/front/f/1/f1dc4252-ede5-42d6-bb40-27f796069cc2.webp?1790684707" data-src-en="https://cards.scryfall.io/grid/front/c/a/ca894d25-b9fc-4cd6-8746-70d8c2868721.webp?1789614779" data-src-es="https://cards.scryfall.io/grid/front/f/1/f1dc4252-ede5-42d6-bb40-27f796069cc2.webp?1790684707"
+              alt="Confiar la chispa" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Entrust the Spark" data-es="Confiar la chispa">Confiar la chispa</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Fateshaper Aspirant">
+          <button class="pcard" data-card="Fateshaper Aspirant" title="Aspirante a forjadestinos">
+            <img src="https://cards.scryfall.io/grid/front/a/8/a8605475-ebe8-4a2a-b703-a77efa6e8f19.webp?1790680957" data-src-en="https://cards.scryfall.io/grid/front/f/0/f0c8400d-824f-4d79-84bc-7615a0deb831.webp?1789556683" data-src-es="https://cards.scryfall.io/grid/front/a/8/a8605475-ebe8-4a2a-b703-a77efa6e8f19.webp?1790680957"
+              alt="Aspirante a forjadestinos" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Fateshaper Aspirant" data-es="Aspirante a forjadestinos">Aspirante a forjadestinos</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Tether Technician">
+          <button class="pcard" data-card="Tether Technician" title="Técnico de ataduras">
+            <img src="https://cards.scryfall.io/grid/front/f/c/fcded9c6-e801-47f3-8eff-9e1699cc6c77.webp?1790683637" data-src-en="https://cards.scryfall.io/grid/front/b/7/b75bbf46-a421-467a-9433-6cf22398a3a5.webp?1789556839" data-src-es="https://cards.scryfall.io/grid/front/f/c/fcded9c6-e801-47f3-8eff-9e1699cc6c77.webp?1790683637"
+              alt="Técnico de ataduras" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Tether Technician" data-es="Técnico de ataduras">Técnico de ataduras</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 1 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Twisted Fates">
+          <button class="pcard" data-card="Twisted Fates" title="Destinos retorcidos">
+            <img src="https://cards.scryfall.io/grid/front/0/3/03d7d441-2ad5-4b24-a49e-2918e356bfce.webp?1790685448" data-src-en="https://cards.scryfall.io/grid/front/c/7/c7c0765d-38fd-4d7b-bfb4-49b10ff5939b.webp?1789614785" data-src-es="https://cards.scryfall.io/grid/front/0/3/03d7d441-2ad5-4b24-a49e-2918e356bfce.webp?1790685448"
+              alt="Destinos retorcidos" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Twisted Fates" data-es="Destinos retorcidos">Destinos retorcidos</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Winter, Team Player">
+          <button class="pcard" data-card="Winter, Team Player" title="Winter, buen compañero">
+            <img src="https://cards.scryfall.io/grid/front/9/4/947d9ff0-9fef-4482-84a3-c16d294b113f.webp?1790688202" data-src-en="https://cards.scryfall.io/grid/front/d/f/df8713cd-3f4b-43ef-adbd-e37c2617c617.webp?1789128020" data-src-es="https://cards.scryfall.io/grid/front/9/4/947d9ff0-9fef-4482-84a3-c16d294b113f.webp?1790688202"
+              alt="Winter, buen compañero" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Winter, Team Player" data-es="Winter, buen compañero">Winter, buen compañero</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Mind Meanderer">
+          <button class="pcard" data-card="Mind Meanderer" title="Rondamentes">
+            <img src="https://cards.scryfall.io/grid/front/a/4/a4daecf2-8ee0-4684-926d-a9278ef824de.webp?1790684968" data-src-en="https://cards.scryfall.io/grid/front/9/4/94c290ce-252c-42b3-bcb0-c1ef621df566.webp?1789470861" data-src-es="https://cards.scryfall.io/grid/front/a/4/a4daecf2-8ee0-4684-926d-a9278ef824de.webp?1790684968"
+              alt="Rondamentes" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Mind Meanderer" data-es="Rondamentes">Rondamentes</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Face Yourself">
+          <button class="pcard" data-card="Face Yourself" title="Enfrentarse a uno mismo">
+            <img src="https://cards.scryfall.io/grid/front/3/8/386af409-456f-46e2-9e56-0ac70469cc5e.webp?1790683330" data-src-en="https://cards.scryfall.io/grid/front/3/c/3ccf8f64-19bd-4fdf-b70a-30a042bacf2f.webp?1789127528" data-src-es="https://cards.scryfall.io/grid/front/3/8/386af409-456f-46e2-9e56-0ac70469cc5e.webp?1790683330"
+              alt="Enfrentarse a uno mismo" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Face Yourself" data-es="Enfrentarse a uno mismo">Enfrentarse a uno mismo</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Kindred Judgment">
+          <button class="pcard" data-card="Kindred Judgment" title="Juicio de la estirpe">
+            <img src="https://cards.scryfall.io/grid/front/6/1/61664529-2de3-462a-abe4-fe77d04eccb9.webp?1790681188" data-src-en="https://cards.scryfall.io/grid/front/6/f/6f9f814b-8249-4e48-a05e-4c84060fe6fb.webp?1789470776" data-src-es="https://cards.scryfall.io/grid/front/6/1/61664529-2de3-462a-abe4-fe77d04eccb9.webp?1790681188"
+              alt="Juicio de la estirpe" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Kindred Judgment" data-es="Juicio de la estirpe">Juicio de la estirpe</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Emrakul, the Exigent Doom">
+          <button class="pcard" data-card="Emrakul, the Exigent Doom" title="Emrakul, el Fin Severo">
+            <img src="https://cards.scryfall.io/grid/front/0/5/0502114f-786b-4cf1-836a-6b17b802b8bf.webp?1790680772" data-src-en="https://cards.scryfall.io/grid/front/c/3/c3ff8dd3-88a8-49dc-a59b-e2748680623c.webp?1790829846" data-src-es="https://cards.scryfall.io/grid/front/0/5/0502114f-786b-4cf1-836a-6b17b802b8bf.webp?1790680772"
+              alt="Emrakul, el Fin Severo" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Emrakul, the Exigent Doom" data-es="Emrakul, el Fin Severo">Emrakul, el Fin Severo</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Karn, Gilded Guardian">
+          <button class="pcard" data-card="Karn, Gilded Guardian" title="Karn, guardián áureo">
+            <img src="https://cards.scryfall.io/grid/front/1/8/187affe9-7fed-438d-a875-f7a7abbd910d.webp?1790688629" data-src-en="https://cards.scryfall.io/grid/front/3/a/3abcae65-5b21-4c98-adad-34b8bc76ea3a.webp?1789014541" data-src-es="https://cards.scryfall.io/grid/front/1/8/187affe9-7fed-438d-a875-f7a7abbd910d.webp?1790688629"
+              alt="Karn, guardián áureo" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Karn, Gilded Guardian" data-es="Karn, guardián áureo">Karn, guardián áureo</h2>
+          <div class="availability"><strong>×2 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>2 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Meticulous Commons">
+          <button class="pcard" data-card="Meticulous Commons" title="Espacio común meticuloso">
+            <img src="https://cards.scryfall.io/grid/front/b/f/bfdc6481-4a0e-467a-b5be-5bf60af54551.webp?1790686159" data-src-en="https://cards.scryfall.io/grid/front/9/3/93ac525e-1919-43dd-aba4-073b7e4c1768.webp?1789557002" data-src-es="https://cards.scryfall.io/grid/front/b/f/bfdc6481-4a0e-467a-b5be-5bf60af54551.webp?1790686159"
+              alt="Espacio común meticuloso" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Meticulous Commons" data-es="Espacio común meticuloso">Espacio común meticuloso</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article><article class="inventory-card" data-name="Roiling Canopy">
+          <button class="pcard" data-card="Roiling Canopy" title="Enramada turbulenta">
+            <img src="https://cards.scryfall.io/grid/front/a/e/aef0f479-b114-4702-8644-9294b30c9533.webp?1790686246" data-src-en="https://cards.scryfall.io/grid/front/d/b/db61361b-bd12-453e-abc2-bbe09b66e3d9.webp?1789514074" data-src-es="https://cards.scryfall.io/grid/front/a/e/aef0f479-b114-4702-8644-9294b30c9533.webp?1790686246"
+              alt="Enramada turbulenta" loading="lazy" decoding="async">
+          </button>
+          <h2 data-en="Roiling Canopy" data-es="Enramada turbulenta">Enramada turbulenta</h2>
+          <div class="availability"><strong>×1 <span data-en="unused" data-es="sin usar">sin usar</span></strong>
+            <span>1 <span data-en="in pool" data-es="en la pool">en la pool</span> · 0 <span data-en="allocated" data-es="en mazos">en mazos</span></span></div>
+        </article></div>
+      <p id="empty" hidden data-en="No matching cards. Try changing or clearing the filters." data-es="No hay cartas que coincidan. Prueba a cambiar o limpiar los filtros.">No hay cartas que coincidan. Prueba a cambiar o limpiar los filtros.</p>
+    </main>
+    <footer><div class="wrap">Cards and images © Wizards of the Coast. Fan-made, not affiliated with Wizards.</div></footer>
+    <dialog id="modal"><div class="box dialogwrap"><button class="btn close" id="m-close" aria-label="Close">✕</button>
+      <img id="m-img" alt=""><div class="info"><h3 id="m-name"></h3><p class="meta" id="m-meta"></p><p class="oracle" id="m-oracle"></p></div></div></dialog>
+    <script type="application/json" id="carddata">{"Way of the Warlord":{"n":"Way of the Warlord","sn":"Senda del señor de la guerra","i":"https://cards.scryfall.io/grid/front/6/d/6d86e410-20c4-4248-96bf-5780ece6274a.webp?1789729585","si":"https://cards.scryfall.io/grid/front/9/4/94c8e2b3-e12e-4d64-b2c3-583399ef5e4a.webp?1790688172","l":"https://cards.scryfall.io/large/front/6/d/6d86e410-20c4-4248-96bf-5780ece6274a.jpg?1789729585","sl":"https://cards.scryfall.io/large/front/9/4/94c8e2b3-e12e-4d64-b2c3-583399ef5e4a.jpg?1790688172","o":"When Way of the Warlord enters, empower Jace 5. (Put five loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")\nPlaneswalkers you control have \"[−4]: This planeswalker deals 2 damage to up to one target creature or planeswalker and 2 damage to target player.\"","so":"Cuando la Senda del señor de la guerra entre, empodera a Jace 5. (Pon cinco contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)\nLos planeswalkers que controlas tienen \"[−4]: Este planeswalker hace 2 puntos de daño a hasta una criatura o planeswalker objetivo y 2 puntos de daño al jugador objetivo\".","t":"Legendary Enchantment","m":"{2}{R}","r":"uncommon","p":"","remaining":1,"owned":2,"used":1,"mv":3.0,"colors":["R"],"land":false},"Artifist Acumen":{"n":"Artifist Acumen","sn":"Dominio del puñilugio","i":"https://cards.scryfall.io/grid/front/7/d/7d3b720d-f27c-462a-8f80-15748e5086e1.webp?1789729762","si":"https://cards.scryfall.io/grid/front/d/8/d87a37a4-4403-4b80-9412-8fbf02e75ee4.webp?1790682974","l":"https://cards.scryfall.io/large/front/7/d/7d3b720d-f27c-462a-8f80-15748e5086e1.jpg?1789729762","sl":"https://cards.scryfall.io/large/front/d/8/d87a37a4-4403-4b80-9412-8fbf02e75ee4.jpg?1790682974","o":"Creatures you control gain first strike until end of turn.\nDraw a card.","so":"Las criaturas que controlas ganan la habilidad de dañar primero hasta el final del turno.\nRoba una carta.","t":"Sorcery","m":"{R}","r":"common","p":"","remaining":1,"owned":1,"used":0,"mv":1.0,"colors":["R"],"land":false},"Charge the Sanctum":{"n":"Charge the Sanctum","sn":"Atacar el Santuario","i":"https://cards.scryfall.io/grid/front/8/7/87b40df5-5c0a-41f5-a09c-a04f17066a91.webp?1788521570","si":"https://cards.scryfall.io/grid/front/5/d/5d801cfe-e989-40e6-8541-d47c773d5dbc.webp?1790684548","l":"https://cards.scryfall.io/large/front/8/7/87b40df5-5c0a-41f5-a09c-a04f17066a91.jpg?1788521570","sl":"https://cards.scryfall.io/large/front/5/d/5d801cfe-e989-40e6-8541-d47c773d5dbc.jpg?1790684548","o":"Choose one —\n• Creatures you control get +2/+0 until end of turn.\n• Target creature gets +2/+0 and gains first strike until end of turn. Put a +1/+1 counter on it.","so":"Elige uno:\n* Las criaturas que controlas obtienen +2/+0 hasta el final del turno.\n* La criatura objetivo obtiene +2/+0 y gana la habilidad de dañar primero hasta el final del turno. Pon un contador +1/+1 sobre ella.","t":"Instant","m":"{2}{R/W}","r":"common","p":"","remaining":2,"owned":2,"used":0,"mv":3.0,"colors":["R","W"],"land":false},"Way of the Mentor":{"n":"Way of the Mentor","sn":"Senda del mentor","i":"https://cards.scryfall.io/grid/front/1/a/1a59d5b1-12d6-486b-bd29-ca371359addd.webp?1789729554","si":"https://cards.scryfall.io/grid/front/2/4/2455b8ed-fa88-47ac-ac7c-74fc86247597.webp?1790686810","l":"https://cards.scryfall.io/large/front/1/a/1a59d5b1-12d6-486b-bd29-ca371359addd.jpg?1789729554","sl":"https://cards.scryfall.io/large/front/2/4/2455b8ed-fa88-47ac-ac7c-74fc86247597.jpg?1790686810","o":"When Way of the Mentor enters, empower Jace 5. (Put five loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")\nWhenever you gain life, put a loyalty counter on each planeswalker you control.","so":"Cuando la Senda del mentor entre, empodera a Jace 5. (Pon cinco contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)\nSiempre que ganes vidas, pon un contador de lealtad sobre cada planeswalker que controlas.","t":"Legendary Enchantment","m":"{2}{W}","r":"uncommon","p":"","remaining":2,"owned":2,"used":0,"mv":3.0,"colors":["W"],"land":false},"Face Yourself":{"n":"Face Yourself","sn":"Enfrentarse a uno mismo","i":"https://cards.scryfall.io/grid/front/3/c/3ccf8f64-19bd-4fdf-b70a-30a042bacf2f.webp?1789127528","si":"https://cards.scryfall.io/grid/front/3/8/386af409-456f-46e2-9e56-0ac70469cc5e.webp?1790683330","l":"https://cards.scryfall.io/large/front/3/c/3ccf8f64-19bd-4fdf-b70a-30a042bacf2f.jpg?1789127528","sl":"https://cards.scryfall.io/large/front/3/8/386af409-456f-46e2-9e56-0ac70469cc5e.jpg?1790683330","o":"For each creature target player controls, create a token that's a copy of that creature, except it has haste and \"At the beginning of the end step, if you don't control a planeswalker, sacrifice this creature.\"","so":"Por cada criatura que controla el jugador objetivo, creas una ficha que es una copia de esa criatura, excepto que tiene la habilidad de prisa y \"Al comienzo del paso final, si no controlas un planeswalker, sacrifica esta criatura\".","t":"Sorcery","m":"{5}{R}{R}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":7.0,"colors":["R"],"land":false},"Surveillance Phantasm":{"n":"Surveillance Phantasm","sn":"Fantasma escrutador","i":"https://cards.scryfall.io/grid/front/9/d/9df8a06d-c7de-49af-8c01-06dca3dfef4b.webp?1789385597","si":"https://cards.scryfall.io/grid/front/e/3/e3f09800-1ee2-4706-b369-49cf5c658f02.webp?1790682161","l":"https://cards.scryfall.io/large/front/9/d/9df8a06d-c7de-49af-8c01-06dca3dfef4b.jpg?1789385597","sl":"https://cards.scryfall.io/large/front/e/3/e3f09800-1ee2-4706-b369-49cf5c658f02.jpg?1790682161","o":"Defender, flying, vigilance\nAs long as you've scried or surveilled this turn, this creature can attack as though it didn't have defender.\n{3}{U}: Surveil 1. (Look at the top card of your library. You may put it into your graveyard.)","so":"Defensor, vuela, vigilancia.\nMientras hayas adivinado o escrutado este turno, esta criatura puede atacar como si no tuviera la habilidad de defensor.\n{3}{U}: Escruta 1. (Mira la primera carta de tu biblioteca. Puedes ponerla en tu cementerio.)","t":"Creature — Bird Illusion","m":"{1}{U}","r":"common","p":"2/3","remaining":1,"owned":2,"used":1,"mv":2.0,"colors":["U"],"land":false},"Arni, Renowned Champion":{"n":"Arni, Renowned Champion","sn":"Arni, campeón de renombre","i":"https://cards.scryfall.io/grid/front/b/d/bd8db649-1dba-457d-8327-e1f1da1aab36.webp?1789557035","si":"https://cards.scryfall.io/grid/front/9/3/934db437-8921-473f-92c9-982961b15e70.webp?1790687834","l":"https://cards.scryfall.io/large/front/b/d/bd8db649-1dba-457d-8327-e1f1da1aab36.jpg?1789557035","sl":"https://cards.scryfall.io/large/front/9/3/934db437-8921-473f-92c9-982961b15e70.jpg?1790687834","o":"Trample\nWhenever another creature you control enters, Arni gets +X/+0 until end of turn, where X is that creature's power.","so":"Arrolla.\nSiempre que otra criatura que controlas entre, Arni obtiene +X/+0 hasta el final del turno, donde X es la fuerza de esa criatura.","t":"Legendary Creature — Human Berserker","m":"{3}{R}","r":"uncommon","p":"1/5","remaining":1,"owned":1,"used":0,"mv":4.0,"colors":["R"],"land":false},"Solitary Cell":{"n":"Solitary Cell","sn":"Celda solitaria","i":"https://cards.scryfall.io/grid/front/5/1/5142bbb6-194c-4b12-b11a-1a21c9fe81a6.webp?1790558834","si":"https://cards.scryfall.io/grid/front/f/4/f49d864e-2b39-4ff7-8a3e-6eef62ae5def.webp?1790685206","l":"https://cards.scryfall.io/large/front/5/1/5142bbb6-194c-4b12-b11a-1a21c9fe81a6.jpg?1790558834","sl":"https://cards.scryfall.io/large/front/f/4/f49d864e-2b39-4ff7-8a3e-6eef62ae5def.jpg?1790685206","o":"When this artifact enters, exile target nonland permanent an opponent controls with mana value 3 or less until this artifact leaves the battlefield.\n{1}, {T}, Discard a legendary card: Draw a card.","so":"Cuando este artefacto entre, exilia el permanente objetivo que no sea tierra que controla un oponente con valor de maná de 3 o menos hasta que este artefacto deje el campo de batalla.\n{1}, {T}, descartar una carta legendaria: Roba una carta.","t":"Artifact","m":"{R}{W}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["R","W"],"land":false},"Gallia, the Merrymaker":{"n":"Gallia, the Merrymaker","sn":"Galia, juerguista","i":"https://cards.scryfall.io/grid/front/f/2/f27d50f0-d76e-4ce1-a8d9-d997af6a5b41.webp?1791192275","si":"https://cards.scryfall.io/grid/front/2/d/2d6aba86-f533-4fee-9276-453c9382f2ad.webp?1790687886","l":"https://cards.scryfall.io/large/front/f/2/f27d50f0-d76e-4ce1-a8d9-d997af6a5b41.jpg?1791192275","sl":"https://cards.scryfall.io/large/front/2/d/2d6aba86-f533-4fee-9276-453c9382f2ad.jpg?1790687886","o":"Haste\nEach other creature you control with a +1/+1 counter on it has haste.\n{1}{R}, {T}: Put a +1/+1 counter on target creature that entered this turn.","so":"Prisa.\nCada otra criatura que controlas con un contador +1/+1 sobre ella tiene la habilidad de prisa.\n{1}{R}, {T}: Pon un contador +1/+1 sobre la criatura objetivo que entró este turno.","t":"Legendary Creature — Satyr","m":"{1}{R}","r":"uncommon","p":"2/1","remaining":2,"owned":2,"used":0,"mv":2.0,"colors":["R"],"land":false},"Tether Technician":{"n":"Tether Technician","sn":"Técnico de ataduras","i":"https://cards.scryfall.io/grid/front/b/7/b75bbf46-a421-467a-9433-6cf22398a3a5.webp?1789556839","si":"https://cards.scryfall.io/grid/front/f/c/fcded9c6-e801-47f3-8eff-9e1699cc6c77.webp?1790683637","l":"https://cards.scryfall.io/large/front/b/7/b75bbf46-a421-467a-9433-6cf22398a3a5.jpg?1789556839","sl":"https://cards.scryfall.io/large/front/f/c/fcded9c6-e801-47f3-8eff-9e1699cc6c77.jpg?1790683637","o":"Reach\nWhen this creature enters, you may discard a card. When you do, this creature deals 2 damage to any target.","so":"Alcance.\nCuando esta criatura entre, puedes descartar una carta. Cuando lo hagas, esta criatura hace 2 puntos de daño a cualquier objetivo.","t":"Creature — Minotaur Artificer","m":"{4}{R}","r":"common","p":"4/5","remaining":1,"owned":2,"used":1,"mv":5.0,"colors":["R"],"land":false},"Warrior's Blades":{"n":"Warrior's Blades","sn":"Hojas de guerrero","i":"https://cards.scryfall.io/grid/front/c/6/c63d5b0e-ee72-42ed-aa7e-484ba84507cd.webp?1789007648","si":"https://cards.scryfall.io/grid/front/3/3/33fdc186-f81e-44e0-8990-18058e6cd454.webp?1790685585","l":"https://cards.scryfall.io/large/front/c/6/c63d5b0e-ee72-42ed-aa7e-484ba84507cd.jpg?1789007648","sl":"https://cards.scryfall.io/large/front/3/3/33fdc186-f81e-44e0-8990-18058e6cd454.jpg?1790685585","o":"When this Equipment enters, it deals 3 damage to any target and you gain 3 life.\nEquipped creature gets +2/+1.\nEquip {3}. This ability costs {1} less to activate for each +1/+1 counter on the creature it targets.","so":"Cuando este Equipo entre, hace 3 puntos de daño a cualquier objetivo y tú ganas 3 vidas.\nLa criatura equipada obtiene +2/+1.\nEquipar {3}. Te cuesta {1} menos activar esta habilidad por cada contador +1/+1 sobre la criatura a la que hace objetivo.","t":"Artifact — Equipment","m":"{2}{R}{W}","r":"uncommon","p":"","remaining":1,"owned":1,"used":0,"mv":4.0,"colors":["R","W"],"land":false},"Fateshaper Aspirant":{"n":"Fateshaper Aspirant","sn":"Aspirante a forjadestinos","i":"https://cards.scryfall.io/grid/front/f/0/f0c8400d-824f-4d79-84bc-7615a0deb831.webp?1789556683","si":"https://cards.scryfall.io/grid/front/a/8/a8605475-ebe8-4a2a-b703-a77efa6e8f19.webp?1790680957","l":"https://cards.scryfall.io/large/front/f/0/f0c8400d-824f-4d79-84bc-7615a0deb831.jpg?1789556683","sl":"https://cards.scryfall.io/large/front/a/8/a8605475-ebe8-4a2a-b703-a77efa6e8f19.jpg?1790680957","o":"When this creature enters, choose one —\n• Return target legendary card from your graveyard to your hand.\n• Put a +1/+1 counter on target creature. It gains vigilance and indestructible until end of turn. (Damage and effects that say \"destroy\" don't destroy it.)","so":"Cuando esta criatura entre, elige uno:\n* Regresa la carta legendaria objetivo de tu cementerio a tu mano.\n* Pon un contador +1/+1 sobre la criatura objetivo. Gana las habilidades de vigilancia e indestructible hasta el final del turno. (El daño y los efectos que dicen \"destruir\" no la destruyen.)","t":"Creature — Rhino Cleric","m":"{4}{W}","r":"common","p":"3/4","remaining":1,"owned":2,"used":1,"mv":5.0,"colors":["W"],"land":false},"Graft Surgeon":{"n":"Graft Surgeon","sn":"Cirujana de injertos","i":"https://cards.scryfall.io/grid/front/3/2/32a7a905-11bf-4b66-a28e-1066a0e372b8.webp?1789644811","si":"https://cards.scryfall.io/grid/front/e/f/ef1c214f-3d90-45e6-8837-744be9fe2d9b.webp?1790681081","l":"https://cards.scryfall.io/large/front/3/2/32a7a905-11bf-4b66-a28e-1066a0e372b8.jpg?1789644811","sl":"https://cards.scryfall.io/large/front/e/f/ef1c214f-3d90-45e6-8837-744be9fe2d9b.jpg?1790681081","o":"This creature enters with a +1/+1 counter on it.\nWhen this creature dies, put its counters on up to one target creature you control.","so":"Esta criatura entra con un contador +1/+1 sobre ella.\nCuando esta criatura muera, pon sus contadores sobre hasta una criatura objetivo que controlas.","t":"Creature — Human Cleric","m":"{2}{W}","r":"common","p":"2/2","remaining":3,"owned":3,"used":0,"mv":3.0,"colors":["W"],"land":false},"Shatterwing Pegasus":{"n":"Shatterwing Pegasus","sn":"Pegaso de alas quebradas","i":"https://cards.scryfall.io/grid/front/e/2/e29095de-59ec-4562-ba8e-73f952e457ae.webp?1789385580","si":"https://cards.scryfall.io/grid/front/6/b/6baa80d8-41ff-4b3b-8343-cc1c30e18641.webp?1790681467","l":"https://cards.scryfall.io/large/front/e/2/e29095de-59ec-4562-ba8e-73f952e457ae.jpg?1789385580","sl":"https://cards.scryfall.io/large/front/6/b/6baa80d8-41ff-4b3b-8343-cc1c30e18641.jpg?1790681467","o":"Flying\n{4}{W}: Creatures you control get +1/+1 until end of turn.","so":"Vuela.\n{4}{W}: Las criaturas que controlas obtienen +1/+1 hasta el final del turno.","t":"Creature — Pegasus","m":"{2}{W}","r":"common","p":"2/3","remaining":1,"owned":2,"used":1,"mv":3.0,"colors":["W"],"land":false},"Way of the Pyromancer":{"n":"Way of the Pyromancer","sn":"Senda de la piromante","i":"https://cards.scryfall.io/grid/front/c/1/c1a00020-7c14-4503-a057-5763704bb83e.webp?1788878311","si":"https://cards.scryfall.io/grid/front/e/3/e339cc9b-1343-4bb1-900d-3b5a91a8f4ca.webp?1790688148","l":"https://cards.scryfall.io/large/front/c/1/c1a00020-7c14-4503-a057-5763704bb83e.jpg?1788878311","sl":"https://cards.scryfall.io/large/front/e/3/e339cc9b-1343-4bb1-900d-3b5a91a8f4ca.jpg?1790688148","o":"When Way of the Pyromancer enters, empower Jace 2. (Put two loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")\nPlaneswalkers you control have \"[+1]: Add {R}.\"","so":"Cuando la Senda de la piromante entre, empodera a Jace 2. (Pon dos contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)\nLos planeswalkers que controlas tienen \"[+1]: Agrega {R}\".","t":"Legendary Enchantment","m":"{1}{R}","r":"uncommon","p":"","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["R"],"land":false},"Inspired Tethermage":{"n":"Inspired Tethermage","sn":"Atadurista con inspiración","i":"https://cards.scryfall.io/grid/front/0/7/073f4998-a204-447b-93d5-746ae87fd6a1.webp?1788878192","si":"https://cards.scryfall.io/grid/front/0/3/03d62c17-a8b6-4d90-867c-78907dd7b76a.webp?1790684046","l":"https://cards.scryfall.io/large/front/0/7/073f4998-a204-447b-93d5-746ae87fd6a1.jpg?1788878192","sl":"https://cards.scryfall.io/large/front/0/3/03d62c17-a8b6-4d90-867c-78907dd7b76a.jpg?1790684046","o":"Whenever you put one or more loyalty counters on a planeswalker, put a +1/+1 counter on this creature.\n{6}: Empower Jace 2. (Put two loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")","so":"Siempre que pongas uno o más contadores de lealtad sobre un planeswalker, pon un contador +1/+1 sobre esta criatura.\n{6}: Empodera a Jace 2. (Pon dos contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)","t":"Creature — Elf Warrior","m":"{2}{G}","r":"common","p":"3/2","remaining":1,"owned":1,"used":0,"mv":3.0,"colors":["G"],"land":false},"Medic's Kitesail":{"n":"Medic's Kitesail","sn":"Velacometa médica","i":"https://cards.scryfall.io/grid/front/8/b/8b07409a-1dce-461d-95e4-1130521ff4c4.webp?1789556945","si":"https://cards.scryfall.io/grid/front/7/f/7f78bab1-591e-4dee-9389-5fcb6501c1ae.webp?1790685864","l":"https://cards.scryfall.io/large/front/8/b/8b07409a-1dce-461d-95e4-1130521ff4c4.jpg?1789556945","sl":"https://cards.scryfall.io/large/front/7/f/7f78bab1-591e-4dee-9389-5fcb6501c1ae.jpg?1790685864","o":"Equipped creature gets +1/+0 and has flying and \"Whenever this creature attacks, you gain 1 life.\"\nEquip {2} ({2}: Attach to target creature you control. Equip only as a sorcery.)","so":"La criatura equipada obtiene +1/+0 y tiene la habilidad de volar y \"Siempre que esta criatura ataque, ganas 1 vida\".\nEquipar {2}. ({2}: Anexa este Equipo a la criatura objetivo que controlas. Activa la habilidad de equipar como un conjuro.)","t":"Artifact — Equipment","m":"{2}","r":"common","p":"","remaining":2,"owned":2,"used":0,"mv":2.0,"colors":[],"land":false},"Danitha, Spear of Agony":{"n":"Danitha, Spear of Agony","sn":"Danitha, Lanza de Agonía","i":"https://cards.scryfall.io/grid/front/6/4/6489814b-3d10-423e-988c-324740d36748.webp?1789127194","si":"https://cards.scryfall.io/grid/front/2/5/257807c2-2fcd-4a7b-9b8f-9acb0f52f81b.webp?1790687378","l":"https://cards.scryfall.io/large/front/6/4/6489814b-3d10-423e-988c-324740d36748.jpg?1789127194","sl":"https://cards.scryfall.io/large/front/2/5/257807c2-2fcd-4a7b-9b8f-9acb0f52f81b.jpg?1790687378","o":"First strike\nWhenever you cast a spell that targets an opponent or a creature an opponent controls, put a +1/+1 counter on Danitha.","so":"Daña primero.\nSiempre que lances un hechizo que haga objetivo a un oponente o una criatura que controla un oponente, pon un contador +1/+1 sobre Danitha.","t":"Legendary Creature — Human Knight","m":"{2}{B}","r":"uncommon","p":"2/2","remaining":1,"owned":2,"used":1,"mv":3.0,"colors":["B"],"land":false},"Tethermage's Advantage":{"n":"Tethermage's Advantage","sn":"Ventaja de atadurista","i":"https://cards.scryfall.io/grid/front/3/8/38589a7c-9cfb-4bcc-845e-9dc205095853.webp?1789129937","si":"https://cards.scryfall.io/grid/front/3/6/36ea6a36-fbe4-4907-a37c-030101b5cbb4.webp?1790684313","l":"https://cards.scryfall.io/large/front/3/8/38589a7c-9cfb-4bcc-845e-9dc205095853.jpg?1789129937","sl":"https://cards.scryfall.io/large/front/3/6/36ea6a36-fbe4-4907-a37c-030101b5cbb4.jpg?1790684313","o":"Target creature gets +2/+2 and gains reach until end of turn. Untap it.","so":"La criatura objetivo obtiene +2/+2 y gana la habilidad de alcance hasta el final del turno. Enderézala.","t":"Instant","m":"{G}","r":"common","p":"","remaining":3,"owned":3,"used":0,"mv":1.0,"colors":["G"],"land":false},"Academic Ascent":{"n":"Academic Ascent","sn":"Ascenso académico","i":"https://cards.scryfall.io/grid/front/7/3/730d8c28-1e58-4b8e-89e9-445d154d2e83.webp?1788878081","si":"https://cards.scryfall.io/grid/front/8/5/85fd599f-8a3e-40fe-a06e-7eeb8771f6b9.webp?1790680807","l":"https://cards.scryfall.io/large/front/7/3/730d8c28-1e58-4b8e-89e9-445d154d2e83.jpg?1788878081","sl":"https://cards.scryfall.io/large/front/8/5/85fd599f-8a3e-40fe-a06e-7eeb8771f6b9.jpg?1790680807","o":"Target creature gets +2/+2 and gains flying until end of turn.\nEmpower Jace 2. (Put two loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")","so":"La criatura objetivo obtiene +2/+2 y gana la habilidad de volar hasta el final del turno.\nEmpodera a Jace 2. (Pon dos contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)","t":"Instant","m":"{1}{W}","r":"common","p":"","remaining":2,"owned":2,"used":0,"mv":2.0,"colors":["W"],"land":false},"Karn, Gilded Guardian":{"n":"Karn, Gilded Guardian","sn":"Karn, guardián áureo","i":"https://cards.scryfall.io/grid/front/3/a/3abcae65-5b21-4c98-adad-34b8bc76ea3a.webp?1789014541","si":"https://cards.scryfall.io/grid/front/1/8/187affe9-7fed-438d-a875-f7a7abbd910d.webp?1790688629","l":"https://cards.scryfall.io/large/front/3/a/3abcae65-5b21-4c98-adad-34b8bc76ea3a.jpg?1789014541","sl":"https://cards.scryfall.io/large/front/1/8/187affe9-7fed-438d-a875-f7a7abbd910d.jpg?1790688629","o":"Vigilance, trample\nWhen Karn enters, draw a card for each color among other artifacts you control.","so":"Vigilancia, arrolla.\nCuando Karn entre, roba una carta por cada color entre los otros artefactos que controlas.","t":"Legendary Artifact Creature — Golem","m":"{2/W}{2/U}{2/B}{2/R}{2/G}","r":"rare","p":"5/5","remaining":2,"owned":2,"used":0,"mv":10.0,"colors":["B","G","R","U","W"],"land":false},"Karn, Argent Defender":{"n":"Karn, Argent Defender","sn":"Karn, defensor argénteo","i":"https://cards.scryfall.io/grid/front/1/e/1ebbbddb-2dc3-4194-b72b-13bcebe2ab89.webp?1788878301","si":"https://cards.scryfall.io/grid/front/4/2/4271af8b-7f3e-407b-bbcb-05df3bf1200a.webp?1790688826","l":"https://cards.scryfall.io/large/front/1/e/1ebbbddb-2dc3-4194-b72b-13bcebe2ab89.jpg?1788878301","sl":"https://cards.scryfall.io/large/front/4/2/4271af8b-7f3e-407b-bbcb-05df3bf1200a.jpg?1790688826","o":"Artifacts and creatures entering the battlefield don't cause abilities to trigger.","so":"Los artefactos y criaturas no hacen que se disparen habilidades cuando entran al campo de batalla.","t":"Legendary Artifact Creature — Golem","m":"{2}","r":"rare","p":"1/3","remaining":2,"owned":2,"used":0,"mv":2.0,"colors":[],"land":false},"Edgar, Ancient Bloodlord":{"n":"Edgar, Ancient Bloodlord","sn":"Edgar, señor sangriento anciano","i":"https://cards.scryfall.io/grid/front/7/c/7c619fed-2394-4efc-8cdc-6df5f51c1f57.webp?1789127743","si":"https://cards.scryfall.io/grid/front/9/f/9fdf3e0c-d3a2-4e00-bc4c-44069465ead5.webp?1790688575","l":"https://cards.scryfall.io/large/front/7/c/7c619fed-2394-4efc-8cdc-6df5f51c1f57.jpg?1789127743","sl":"https://cards.scryfall.io/large/front/9/f/9fdf3e0c-d3a2-4e00-bc4c-44069465ead5.jpg?1790688575","o":"Whenever another creature or planeswalker you control dies, you gain 1 life.\n{2}, Sacrifice another creature or planeswalker: Put a +1/+1 counter on Edgar. He gains menace until end of turn. (He can't be blocked except by two or more creatures.)","so":"Siempre que otra criatura o planeswalker que controlas muera, ganas 1 vida.\n{2}, sacrificar otra criatura o planeswalker: Pon un contador +1/+1 sobre Edgar. Gana la habilidad de amenaza hasta el final del turno. (No puede ser bloqueado excepto por dos o más criaturas.)","t":"Legendary Creature — Vampire Noble","m":"{W}{B}","r":"uncommon","p":"2/3","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["B","W"],"land":false},"Essence Burn":{"n":"Essence Burn","sn":"Quemar la esencia","i":"https://cards.scryfall.io/grid/front/d/2/d2e958de-70de-4156-8f9b-b2c0c1ba704a.webp?1789470825","si":"https://cards.scryfall.io/grid/front/4/2/424ecd65-3814-4939-ac2c-2627821fe2fc.webp?1790683301","l":"https://cards.scryfall.io/large/front/d/2/d2e958de-70de-4156-8f9b-b2c0c1ba704a.jpg?1789470825","sl":"https://cards.scryfall.io/large/front/4/2/424ecd65-3814-4939-ac2c-2627821fe2fc.jpg?1790683301","o":"Essence Burn deals 5 damage to target black or green creature or planeswalker. If that permanent would die this turn, exile it instead.","so":"Quemar la esencia hace 5 puntos de daño a la criatura o planeswalker verde o negro objetivo. Si ese permanente fuera a morir este turno, en vez de eso, exílialo.","t":"Instant","m":"{1}{R}","r":"uncommon","p":"","remaining":3,"owned":3,"used":0,"mv":2.0,"colors":["R"],"land":false},"Murmuring Volume":{"n":"Murmuring Volume","sn":"Volumen murmurante","i":"https://cards.scryfall.io/grid/front/d/6/d68eab2e-89dd-4377-b7af-01512b1804a0.webp?1789385977","si":"https://cards.scryfall.io/grid/front/8/7/8775f9ff-6965-44b7-8362-c4e4f1bb2ff4.webp?1790685890","l":"https://cards.scryfall.io/large/front/d/6/d68eab2e-89dd-4377-b7af-01512b1804a0.jpg?1789385977","sl":"https://cards.scryfall.io/large/front/8/7/8775f9ff-6965-44b7-8362-c4e4f1bb2ff4.jpg?1790685890","o":"{T}: Add one mana of any color.\n{2}, {T}, Discard a card: Draw a card.","so":"{T}: Agrega un maná de cualquier color.\n{2}, {T}, descartar una carta: Roba una carta.","t":"Artifact — Book","m":"{3}","r":"common","p":"","remaining":1,"owned":2,"used":1,"mv":3.0,"colors":[],"land":false},"Precise Redaction":{"n":"Precise Redaction","sn":"Censurar con precisión","i":"https://cards.scryfall.io/grid/front/9/2/9244efad-35ab-45c0-b173-4bc68276cb67.webp?1789470790","si":"https://cards.scryfall.io/grid/front/7/a/7a0bc0c8-2bb7-4215-82ae-04662a0af218.webp?1790681949","l":"https://cards.scryfall.io/large/front/9/2/9244efad-35ab-45c0-b173-4bc68276cb67.jpg?1789470790","sl":"https://cards.scryfall.io/large/front/7/a/7a0bc0c8-2bb7-4215-82ae-04662a0af218.jpg?1790681949","o":"Counter target white or black spell.","so":"Contrarresta el hechizo blanco o negro objetivo.","t":"Instant","m":"{1}{U}","r":"uncommon","p":"","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["U"],"land":false},"Gideon's Memorial":{"n":"Gideon's Memorial","sn":"Monumento a Gideon","i":"https://cards.scryfall.io/grid/front/7/6/768c0e64-9907-417a-a763-c836fdf36883.webp?1789127685","si":"https://cards.scryfall.io/grid/front/0/9/09ae8364-7684-4bd6-9df8-0942ebf75268.webp?1790686546","l":"https://cards.scryfall.io/large/front/7/6/768c0e64-9907-417a-a763-c836fdf36883.jpg?1789127685","sl":"https://cards.scryfall.io/large/front/0/9/09ae8364-7684-4bd6-9df8-0942ebf75268.jpg?1790686546","o":"Creature tokens you control get +1/+0 and have vigilance.\n{T}: Add one mana of any color. Spend this mana only to cast a planeswalker spell.\n{1}{W}, Discard this card: It deals 4 damage to target attacking or blocking creature.","so":"Las fichas de criatura que controlas obtienen +1/+0 y tienen la habilidad de vigilancia.\n{T}: Agrega un maná de cualquier color. Usa este maná solo para lanzar un hechizo de planeswalker.\n{1}{W}, descartar esta carta: Hace 4 puntos de daño a la criatura atacante o bloqueadora objetivo.","t":"Legendary Artifact","m":"{1}{W}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["W"],"land":false},"Rescue Girl, First Responder":{"n":"Rescue Girl, First Responder","sn":"La Niña Rescate, socorrista","i":"https://cards.scryfall.io/grid/front/6/9/699874e3-1ccf-4a6c-8371-61040de82d08.webp?1789645598","si":"https://cards.scryfall.io/grid/front/e/b/ebb5b98b-391a-487d-9aeb-acd9053f9a3d.webp?1790686653","l":"https://cards.scryfall.io/large/front/6/9/699874e3-1ccf-4a6c-8371-61040de82d08.jpg?1789645598","sl":"https://cards.scryfall.io/large/front/e/b/ebb5b98b-391a-487d-9aeb-acd9053f9a3d.jpg?1790686653","o":"Flying\n{T}: Return another target permanent you control to its owner's hand. Activate only during your turn.","so":"Vuela.\n{T}: Regresa otro permanente objetivo que controlas a la mano de su propietario. Activa esto solo durante tu turno.","t":"Legendary Creature — Human Cleric","m":"{2}{W}","r":"uncommon","p":"1/3","remaining":1,"owned":1,"used":0,"mv":3.0,"colors":["W"],"land":false},"Tomik, Orzhov Lawmage":{"n":"Tomik, Orzhov Lawmage","sn":"Tomik, mago de la ley orzhov","i":"https://cards.scryfall.io/grid/front/7/c/7ca95235-6e54-4ff8-bc2e-6a3d483ff007.webp?1789729766","si":"https://cards.scryfall.io/grid/front/a/c/ac3e97e6-9d70-49d2-9589-8077249a5f9e.webp?1790686760","l":"https://cards.scryfall.io/large/front/7/c/7ca95235-6e54-4ff8-bc2e-6a3d483ff007.jpg?1789729766","sl":"https://cards.scryfall.io/large/front/a/c/ac3e97e6-9d70-49d2-9589-8077249a5f9e.jpg?1790686760","o":"Flying\nPlaneswalkers you control have \"No more than one creature can attack this planeswalker each combat.\"\n{T}: Target creature with a +1/+1 counter on it gains flying until end of turn.","so":"Vuela.\nLos planeswalkers que controlas tienen \"No más de una criatura puede atacar a este planeswalker cada combate\".\n{T}: La criatura objetivo con un contador +1/+1 sobre ella gana la habilidad de volar hasta el final del turno.","t":"Legendary Creature — Human Advisor","m":"{1}{W}","r":"uncommon","p":"2/1","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["W"],"land":false},"Campus Crier":{"n":"Campus Crier","sn":"Pregonero del campus","i":"https://cards.scryfall.io/grid/front/6/0/6047b14c-91d5-4f8e-af3f-057a541e2546.webp?1788878120","si":"https://cards.scryfall.io/grid/front/d/8/d8d80bc5-77ce-4e4b-863c-46c2381074b5.webp?1790680889","l":"https://cards.scryfall.io/large/front/6/0/6047b14c-91d5-4f8e-af3f-057a541e2546.jpg?1788878120","sl":"https://cards.scryfall.io/large/front/d/8/d8d80bc5-77ce-4e4b-863c-46c2381074b5.jpg?1790680889","o":"{1}, Exile this card from your graveyard: Empower Jace 2. (Put two loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")","so":"{1}, exiliar esta carta de tu cementerio: Empodera a Jace 2. (Pon dos contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)","t":"Creature — Human Advisor","m":"{1}{W}","r":"common","p":"3/1","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["W"],"land":false},"Predictive Preparations":{"n":"Predictive Preparations","sn":"Preparaciones predictivas","i":"https://cards.scryfall.io/grid/front/5/0/50a0e5f0-3c39-4f16-9a73-eec8ef71f12e.webp?1789556696","si":"https://cards.scryfall.io/grid/front/3/5/35990bee-ee4b-43b2-8433-2da80d566eef.webp?1790681283","l":"https://cards.scryfall.io/large/front/5/0/50a0e5f0-3c39-4f16-9a73-eec8ef71f12e.jpg?1789556696","sl":"https://cards.scryfall.io/large/front/3/5/35990bee-ee4b-43b2-8433-2da80d566eef.jpg?1790681283","o":"Put a +1/+1 counter on each of one or two target creatures.\nFlashback {3}{W} (You may cast this card from your graveyard for its flashback cost. Then exile it.)","so":"Pon un contador +1/+1 sobre cada una de una o dos criaturas objetivo.\nRetrospectiva {3}{W}. (Puedes lanzar esta carta desde tu cementerio pagando su coste de retrospectiva. Luego exíliala.)","t":"Sorcery","m":"{1}{W}","r":"common","p":"","remaining":2,"owned":2,"used":0,"mv":2.0,"colors":["W"],"land":false},"Proft, Consulting Detective":{"n":"Proft, Consulting Detective","sn":"Proft, detective independiente","i":"https://cards.scryfall.io/grid/front/b/8/b8466593-40fe-4557-89b2-760c1c92087b.webp?1789127178","si":"https://cards.scryfall.io/grid/front/5/4/54056cef-8f6f-44dc-86ff-ee4ebf1c631f.webp?1790687125","l":"https://cards.scryfall.io/large/front/b/8/b8466593-40fe-4557-89b2-760c1c92087b.jpg?1789127178","sl":"https://cards.scryfall.io/large/front/5/4/54056cef-8f6f-44dc-86ff-ee4ebf1c631f.jpg?1790687125","o":"Whenever you scry or surveil, you may pay {2}. If you do, put a +1/+1 counter on Proft and draw a card. (Draw after you scry or surveil.)","so":"Siempre que adivines o escrutes, puedes pagar {2}. Si lo haces, pon un contador +1/+1 sobre Proft y roba una carta. (Roba después de adivinar o escrutar.)","t":"Legendary Creature — Human Detective","m":"{1}{U}","r":"uncommon","p":"2/2","remaining":1,"owned":2,"used":1,"mv":2.0,"colors":["U"],"land":false},"Extrapolate the Impossible":{"n":"Extrapolate the Impossible","sn":"Extrapolar lo imposible","i":"https://cards.scryfall.io/grid/front/1/7/17fb6538-493c-41aa-ad13-3e63d3ad3317.webp?1789729624","si":"https://cards.scryfall.io/grid/front/6/c/6c8fd009-146a-4e58-b035-7823d4dcce99.webp?1790682495","l":"https://cards.scryfall.io/large/front/1/7/17fb6538-493c-41aa-ad13-3e63d3ad3317.jpg?1789729624","sl":"https://cards.scryfall.io/large/front/6/c/6c8fd009-146a-4e58-b035-7823d4dcce99.jpg?1790682495","o":"You may reveal exactly two cards you own with different names from outside the game. An opponent chooses one of them. You put that card into your hand.","so":"Puedes mostrar exactamente dos cartas de las cuales eres propietario con nombres distintos de fuera del juego. Un oponente elige una de ellas. Pones esa carta en tu mano.","t":"Sorcery","m":"{1}{B}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["B"],"land":false},"Marwyn, the Clearcutter":{"n":"Marwyn, the Clearcutter","sn":"Marwyn, la Taladora","i":"https://cards.scryfall.io/grid/front/f/9/f93da73c-ca8b-438e-8387-6109dac3fc1a.webp?1789644549","si":"https://cards.scryfall.io/grid/front/8/c/8ca1df2c-5c40-4cd6-af5d-03219b907495.webp?1790687993","l":"https://cards.scryfall.io/large/front/f/9/f93da73c-ca8b-438e-8387-6109dac3fc1a.jpg?1789644549","sl":"https://cards.scryfall.io/large/front/8/c/8ca1df2c-5c40-4cd6-af5d-03219b907495.jpg?1790687993","o":"{2}, {T}, Sacrifice an artifact or land: Draw a card.","so":"{2}, {T}, sacrificar un artefacto o tierra: Roba una carta.","t":"Legendary Creature — Elf Warrior","m":"{R}","r":"uncommon","p":"2/1","remaining":1,"owned":2,"used":1,"mv":1.0,"colors":["R"],"land":false},"Sureshot Sower":{"n":"Sureshot Sower","sn":"Sembradora tirocertero","i":"https://cards.scryfall.io/grid/front/b/6/b635389c-e286-4edb-80d1-23dbe4a18857.webp?1789614751","si":"https://cards.scryfall.io/grid/front/1/d/1da29332-25b8-48ca-8091-7460dedd9c26.webp?1790684234","l":"https://cards.scryfall.io/large/front/b/6/b635389c-e286-4edb-80d1-23dbe4a18857.jpg?1789614751","sl":"https://cards.scryfall.io/large/front/1/d/1da29332-25b8-48ca-8091-7460dedd9c26.jpg?1790684234","o":"Reach\n{3}{G}, Discard this card: Destroy target creature with flying.","so":"Alcance.\n{3}{G}, descartar esta carta: Destruye la criatura objetivo con la habilidad de volar.","t":"Creature — Human Archer","m":"{1}{G}","r":"common","p":"3/1","remaining":1,"owned":2,"used":1,"mv":2.0,"colors":["G"],"land":false},"Entrust the Spark":{"n":"Entrust the Spark","sn":"Confiar la chispa","i":"https://cards.scryfall.io/grid/front/c/a/ca894d25-b9fc-4cd6-8746-70d8c2868721.webp?1789614779","si":"https://cards.scryfall.io/grid/front/f/1/f1dc4252-ede5-42d6-bb40-27f796069cc2.webp?1790684707","l":"https://cards.scryfall.io/large/front/c/a/ca894d25-b9fc-4cd6-8746-70d8c2868721.jpg?1789614779","sl":"https://cards.scryfall.io/large/front/f/1/f1dc4252-ede5-42d6-bb40-27f796069cc2.jpg?1790684707","o":"You may sacrifice a planeswalker. If you do, search your library for a planeswalker card, put it onto the battlefield, then shuffle.","so":"Puedes sacrificar un planeswalker. Si lo haces, busca en tu biblioteca una carta de planeswalker, ponla en el campo de batalla y luego baraja.","t":"Sorcery","m":"{3}{G}{U}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":5.0,"colors":["G","U"],"land":false},"Twisted Fates":{"n":"Twisted Fates","sn":"Destinos retorcidos","i":"https://cards.scryfall.io/grid/front/c/7/c7c0765d-38fd-4d7b-bfb4-49b10ff5939b.webp?1789614785","si":"https://cards.scryfall.io/grid/front/0/3/03d7d441-2ad5-4b24-a49e-2918e356bfce.webp?1790685448","l":"https://cards.scryfall.io/large/front/c/7/c7c0765d-38fd-4d7b-bfb4-49b10ff5939b.jpg?1789614785","sl":"https://cards.scryfall.io/large/front/0/3/03d7d441-2ad5-4b24-a49e-2918e356bfce.jpg?1790685448","o":"Destroy target nonland permanent. Put a +1/+1 counter on each creature target player controls.","so":"Destruye el permanente objetivo que no sea tierra. Pon un contador +1/+1 sobre cada criatura que controla el jugador objetivo.","t":"Sorcery","m":"{2}{W}{W}{B}","r":"uncommon","p":"","remaining":1,"owned":1,"used":0,"mv":5.0,"colors":["B","W"],"land":false},"Mabel, Valley Hero":{"n":"Mabel, Valley Hero","sn":"Mabel, heroína de Vallis","i":"https://cards.scryfall.io/grid/front/4/7/47abea4b-9848-48aa-bc1b-f04f4799e920.webp?1790135467","si":"https://cards.scryfall.io/grid/front/8/9/898bb399-9f22-4157-9283-bac694956b85.webp?1790688692","l":"https://cards.scryfall.io/large/front/4/7/47abea4b-9848-48aa-bc1b-f04f4799e920.jpg?1790135467","sl":"https://cards.scryfall.io/large/front/8/9/898bb399-9f22-4157-9283-bac694956b85.jpg?1790688692","o":"Whenever Mabel or another creature you control enters, put a +1/+1 counter on target creature that entered this turn.","so":"Siempre que Mabel u otra criatura que controlas entre, pon un contador +1/+1 sobre la criatura objetivo que entró este turno.","t":"Legendary Creature — Mouse Soldier","m":"{1}{R}{W}","r":"uncommon","p":"1/2","remaining":1,"owned":1,"used":0,"mv":3.0,"colors":["R","W"],"land":false},"Tam's Resistance":{"n":"Tam's Resistance","sn":"Resistencia de Tam","i":"https://cards.scryfall.io/grid/front/b/3/b3d33df2-a77b-4c2e-ba7f-2cc9c1505f9b.webp?1788878215","si":"https://cards.scryfall.io/grid/front/f/0/f0a8a0ae-00e5-4c40-8582-5cd30ebb50c1.webp?1790685315","l":"https://cards.scryfall.io/large/front/b/3/b3d33df2-a77b-4c2e-ba7f-2cc9c1505f9b.jpg?1788878215","sl":"https://cards.scryfall.io/large/front/f/0/f0a8a0ae-00e5-4c40-8582-5cd30ebb50c1.jpg?1790685315","o":"Put a +1/+1 counter on up to one target creature. It gains vigilance until end of turn.\nEmpower Jace 4. (Put four loyalty counters on a Jace token you control. If you don't control one, first create a blue Jace planeswalker token with \"[−1]: Surveil 1\" and \"[−3]: Draw a card.\")","so":"Pon un contador +1/+1 sobre hasta una criatura objetivo. Gana la habilidad de vigilancia hasta el final del turno.\nEmpodera a Jace 4. (Pon cuatro contadores de lealtad sobre una ficha de Jace que controlas. Si no controlas una, primero crea una ficha de planeswalker Jace azul con \"[−1]: Escruta 1\" y \"[−3]: Roba una carta\".)","t":"Sorcery","m":"{1}{G/U}","r":"common","p":"","remaining":2,"owned":2,"used":0,"mv":2.0,"colors":["G","U"],"land":false},"Emrakul, the Exigent Doom":{"n":"Emrakul, the Exigent Doom","sn":"Emrakul, el Fin Severo","i":"https://cards.scryfall.io/grid/front/c/3/c3ff8dd3-88a8-49dc-a59b-e2748680623c.webp?1790829846","si":"https://cards.scryfall.io/grid/front/0/5/0502114f-786b-4cf1-836a-6b17b802b8bf.webp?1790680772","l":"https://cards.scryfall.io/large/front/c/3/c3ff8dd3-88a8-49dc-a59b-e2748680623c.jpg?1790829846","sl":"https://cards.scryfall.io/large/front/0/5/0502114f-786b-4cf1-836a-6b17b802b8bf.jpg?1790680772","o":"When you cast this spell, untap all lands you control.\nFlying, trample\nWard—Sacrifice three permanents.\n{3}, Exile this card from your hand: Target land gains \"{T}: Add {C}{C}\" until this card is cast from exile. You may cast this card for as long as it remains exiled.","so":"Cuando lances este hechizo, endereza todas las tierras que controlas.\nVuela, arrolla.\nRebatir-Sacrificar tres permanentes.\n{3}, exiliar esta carta de tu mano: La tierra objetivo gana \"{T}: Agrega {C}{C}\" hasta que esta carta se lance desde el exilio. Puedes lanzar esta carta mientras permanezca exiliada.","t":"Legendary Creature — Eldrazi","m":"{10}","r":"mythic","p":"12/12","remaining":1,"owned":1,"used":0,"mv":10.0,"colors":[],"land":false},"Eye of Jace":{"n":"Eye of Jace","sn":"Ojo de Jace","i":"https://cards.scryfall.io/grid/front/0/e/0edba64a-39cf-4a8d-ba20-4f7da10b6c3d.webp?1789614864","si":"https://cards.scryfall.io/grid/front/6/6/66c30ad2-abd8-4912-bd18-3d5d53813df8.webp?1790685785","l":"https://cards.scryfall.io/large/front/0/e/0edba64a-39cf-4a8d-ba20-4f7da10b6c3d.jpg?1789614864","sl":"https://cards.scryfall.io/large/front/6/6/66c30ad2-abd8-4912-bd18-3d5d53813df8.jpg?1790685785","o":"At the beginning of your upkeep, surveil 1. Then if there are seven or more cards in your graveyard, sacrifice this artifact, it deals 2 damage to each opponent, and you gain 2 life. (To surveil 1, look at the top card of your library. You may put it into your graveyard.)","so":"Al comienzo de tu mantenimiento, escruta 1. Luego, si hay siete o más cartas en tu cementerio, sacrifica este artefacto, hace 2 puntos de daño a cada oponente y tú ganas 2 vidas. (Para escrutar 1, mira la primera carta de tu biblioteca. Puedes ponerla en tu cementerio.)","t":"Artifact","m":"{1}","r":"uncommon","p":"","remaining":1,"owned":1,"used":0,"mv":1.0,"colors":[],"land":false},"Living Library":{"n":"Living Library","sn":"Biblioteca viva","i":"https://cards.scryfall.io/grid/front/5/d/5d4a8e5f-0024-4da3-a2f5-edb48b12e733.webp?1789556949","si":"https://cards.scryfall.io/grid/front/b/3/b358eb02-ba60-4263-8630-c16358833151.webp?1790685839","l":"https://cards.scryfall.io/large/front/5/d/5d4a8e5f-0024-4da3-a2f5-edb48b12e733.jpg?1789556949","sl":"https://cards.scryfall.io/large/front/b/3/b358eb02-ba60-4263-8630-c16358833151.jpg?1790685839","o":"{6}, Sacrifice this creature: Choose target creature or planeswalker an opponent controls. Its owner shuffles it into their library.","so":"{6}, sacrificar esta criatura: Elige la criatura o planeswalker objetivo que controla un oponente. Su propietario lo baraja en su biblioteca.","t":"Artifact Creature — Book Illusion","m":"{2}","r":"common","p":"0/4","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":[],"land":false},"Roiling Canopy":{"n":"Roiling Canopy","sn":"Enramada turbulenta","i":"https://cards.scryfall.io/grid/front/d/b/db61361b-bd12-453e-abc2-bbe09b66e3d9.webp?1789514074","si":"https://cards.scryfall.io/grid/front/a/e/aef0f479-b114-4702-8644-9294b30c9533.webp?1790686246","l":"https://cards.scryfall.io/large/front/d/b/db61361b-bd12-453e-abc2-bbe09b66e3d9.jpg?1789514074","sl":"https://cards.scryfall.io/large/front/a/e/aef0f479-b114-4702-8644-9294b30c9533.jpg?1790686246","o":"This land enters tapped.\nWhenever a Forest you control enters, if you control at least five other Forests, target creature you control gets +3/+3 until end of turn.\n{T}: Add {G}.","so":"Esta tierra entra girada.\nSiempre que un Bosque que controlas entre, si controlas al menos otros cinco Bosques, la criatura objetivo que controlas obtiene +3/+3 hasta el final del turno.\n{T}: Agrega {G}.","t":"Land","m":"","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":0.0,"colors":["G"],"land":true},"Afterthought Sentry":{"n":"Afterthought Sentry","sn":"Centinela tardío","i":"https://cards.scryfall.io/grid/front/4/d/4d4b3bf7-a149-4099-b97d-4e36a87dfa60.webp?1789385875","si":"https://cards.scryfall.io/grid/front/5/7/57dc3469-982c-4788-93ea-207b30689ccf.webp?1790685673","l":"https://cards.scryfall.io/large/front/4/d/4d4b3bf7-a149-4099-b97d-4e36a87dfa60.jpg?1789385875","sl":"https://cards.scryfall.io/large/front/5/7/57dc3469-982c-4788-93ea-207b30689ccf.jpg?1790685673","o":"{2}: This creature gains flying until end of turn.\nWhenever this creature attacks, exile up to one target card from a graveyard.","so":"{2}: Esta criatura gana la habilidad de volar hasta el final del turno.\nSiempre que esta criatura ataque, exilia hasta una carta objetivo de un cementerio.","t":"Artifact Creature — Gargoyle","m":"{2}","r":"common","p":"2/2","remaining":1,"owned":2,"used":1,"mv":2.0,"colors":[],"land":false},"Meticulous Commons":{"n":"Meticulous Commons","sn":"Espacio común meticuloso","i":"https://cards.scryfall.io/grid/front/9/3/93ac525e-1919-43dd-aba4-073b7e4c1768.webp?1789557002","si":"https://cards.scryfall.io/grid/front/b/f/bfdc6481-4a0e-467a-b5be-5bf60af54551.webp?1790686159","l":"https://cards.scryfall.io/large/front/9/3/93ac525e-1919-43dd-aba4-073b7e4c1768.jpg?1789557002","sl":"https://cards.scryfall.io/large/front/b/f/bfdc6481-4a0e-467a-b5be-5bf60af54551.jpg?1790686159","o":"This land enters tapped unless you control a planeswalker.\n{T}: Add {W} or {B}.","so":"Esta tierra entra girada a menos que controles un planeswalker.\n{T}: Agrega {W} o {B}.","t":"Land","m":"","r":"common","p":"","remaining":1,"owned":1,"used":0,"mv":0.0,"colors":["B","W"],"land":true},"Kindred Judgment":{"n":"Kindred Judgment","sn":"Juicio de la estirpe","i":"https://cards.scryfall.io/grid/front/6/f/6f9f814b-8249-4e48-a05e-4c84060fe6fb.webp?1789470776","si":"https://cards.scryfall.io/grid/front/6/1/61664529-2de3-462a-abe4-fe77d04eccb9.webp?1790681188","l":"https://cards.scryfall.io/large/front/6/f/6f9f814b-8249-4e48-a05e-4c84060fe6fb.jpg?1789470776","sl":"https://cards.scryfall.io/large/front/6/1/61664529-2de3-462a-abe4-fe77d04eccb9.jpg?1790681188","o":"Choose a creature type. Destroy all creatures that aren't of the chosen type.","so":"Elige un tipo de criatura. Destruye todas las criaturas que no sean del tipo elegido.","t":"Sorcery","m":"{5}{W}{W}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":7.0,"colors":["W"],"land":false},"Terminal Criticism":{"n":"Terminal Criticism","sn":"Crítica fulminante","i":"https://cards.scryfall.io/grid/front/7/e/7ebd7e38-b27c-4c6e-aaea-e8ee5ba5e5df.webp?1789470810","si":"https://cards.scryfall.io/grid/front/0/e/0e0e0db5-98bc-4aa3-adab-dd12ddd074b0.webp?1790682851","l":"https://cards.scryfall.io/large/front/7/e/7ebd7e38-b27c-4c6e-aaea-e8ee5ba5e5df.jpg?1789470810","sl":"https://cards.scryfall.io/large/front/0/e/0e0e0db5-98bc-4aa3-adab-dd12ddd074b0.jpg?1790682851","o":"Destroy target creature or planeswalker that's blue or red. You gain 1 life.","so":"Destruye la criatura o planeswalker objetivo que sea azul o rojo. Ganas 1 vida.","t":"Instant","m":"{1}{B}","r":"uncommon","p":"","remaining":1,"owned":1,"used":0,"mv":2.0,"colors":["B"],"land":false},"Winter, Team Player":{"n":"Winter, Team Player","sn":"Winter, buen compañero","i":"https://cards.scryfall.io/grid/front/d/f/df8713cd-3f4b-43ef-adbd-e37c2617c617.webp?1789128020","si":"https://cards.scryfall.io/grid/front/9/4/947d9ff0-9fef-4482-84a3-c16d294b113f.webp?1790688202","l":"https://cards.scryfall.io/large/front/d/f/df8713cd-3f4b-43ef-adbd-e37c2617c617.jpg?1789128020","sl":"https://cards.scryfall.io/large/front/9/4/947d9ff0-9fef-4482-84a3-c16d294b113f.jpg?1790688202","o":"Convoke (Your creatures can help cast this spell. Each creature you tap while casting this spell pays for {1} or one mana of that creature's color.)\nWhenever you cast a noncreature spell, creatures you control get +1/+0 until end of turn.","so":"Convocar. (Tus criaturas pueden ayudar a lanzar este hechizo. Cada criatura que gires al lanzar este hechizo cuenta como un pago de {1} o de un maná del color de esa criatura.)\nSiempre que lances un hechizo que no sea criatura, las criaturas que controlas obtienen +1/+0 hasta el final del turno.","t":"Legendary Creature — Human Warrior","m":"{4}{R}","r":"uncommon","p":"3/3","remaining":1,"owned":1,"used":0,"mv":5.0,"colors":["R"],"land":false},"Germinate Recruits":{"n":"Germinate Recruits","sn":"Germinar reclutas","i":"https://cards.scryfall.io/grid/front/1/b/1b5d7d19-b32a-4786-ae9a-00da5e6658ad.webp?1789644810","si":"https://cards.scryfall.io/grid/front/b/4/b489957c-1503-41fb-8b98-5e2ed592baf3.webp?1790681050","l":"https://cards.scryfall.io/large/front/1/b/1b5d7d19-b32a-4786-ae9a-00da5e6658ad.jpg?1789644810","sl":"https://cards.scryfall.io/large/front/b/4/b489957c-1503-41fb-8b98-5e2ed592baf3.jpg?1790681050","o":"Create X 2/2 colorless Wizard Soldier creature tokens named Cadet, where X is the amount of life you gained this turn.","so":"Crea X fichas de criatura Soldado Hechicero incoloras 2/2 llamadas Cadete, donde X es la cantidad de vidas que ganaste este turno.","t":"Instant","m":"{2}{W}","r":"rare","p":"","remaining":1,"owned":1,"used":0,"mv":3.0,"colors":["W"],"land":false},"Mind Meanderer":{"n":"Mind Meanderer","sn":"Rondamentes","i":"https://cards.scryfall.io/grid/front/9/4/94c290ce-252c-42b3-bcb0-c1ef621df566.webp?1789470861","si":"https://cards.scryfall.io/grid/front/a/4/a4daecf2-8ee0-4684-926d-a9278ef824de.webp?1790684968","l":"https://cards.scryfall.io/large/front/9/4/94c290ce-252c-42b3-bcb0-c1ef621df566.jpg?1789470861","sl":"https://cards.scryfall.io/large/front/a/4/a4daecf2-8ee0-4684-926d-a9278ef824de.jpg?1790684968","o":"Flying\nThis creature has vigilance as long as you control a Jace planeswalker.\nWhen this creature enters, it fights up to one target creature an opponent controls. (Each deals damage equal to its power to the other.)","so":"Vuela.\nEsta criatura tiene la habilidad de vigilancia mientras controles un planeswalker Jace.\nCuando esta criatura entre, lucha contra hasta una criatura objetivo que controla un oponente. (Cada una hace una cantidad de daño igual a su fuerza a la otra.)","t":"Creature — Bird Fish Illusion","m":"{3}{G}{U}{U}","r":"uncommon","p":"4/4","remaining":1,"owned":1,"used":0,"mv":6.0,"colors":["G","U"],"land":false}}</script><script>
+const CARDS=JSON.parse(document.getElementById('carddata').textContent);
+const dlg=document.getElementById('modal');
+let LANG=localStorage.getItem('fra-lang')||new URLSearchParams(location.search).get('lang')||'es';
+const RAR={'common':'común','uncommon':'infrecuente','rare':'rara','mythic':'mítica'};
+
+function applyLang(lang){
+  LANG=lang;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-en][data-es]').forEach(el=>{
+    const v=el.getAttribute('data-'+lang);
+    if(v!==null) el.textContent=v;
+  });
+  document.querySelectorAll('[data-html-en][data-html-es]').forEach(el=>{
+    const v=el.getAttribute('data-html-'+lang);
+    if(v!==null) el.innerHTML=v;
+  });
+  document.querySelectorAll('img[data-src-en]').forEach(img=>{
+    const s=lang==='es'?img.dataset.srcEs:img.dataset.srcEn;
+    if(!s||img.getAttribute('src')===s) return;
+    if(img.complete&&img.naturalWidth>0){
+      const pre=new Image();
+      pre.onload=()=>{img.src=s;};
+      pre.onerror=()=>{img.src=s;};
+      pre.src=s;
+    }else{ img.src=s; }
+  });
+  document.querySelectorAll('.pcard').forEach(b=>{
+    const c=CARDS[b.dataset.card]; if(!c) return;
+    const nm=lang==='es'&&c.sn?c.sn:c.n;
+    b.title=nm;
+    const im=b.querySelector('img'); if(im) im.alt=nm;
+  });
+  document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('on',b.dataset.lang===lang));
+  localStorage.setItem('fra-lang',lang);
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+
+document.querySelectorAll('.pcard').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const c=CARDS[b.dataset.card]; if(!c) return;
+    const es=LANG==='es';
+    const img=document.getElementById('m-img');
+    img.src=es?(c.sl||c.si):(c.l||c.i);
+    img.alt=es&&c.sn?c.sn:c.n;
+    document.getElementById('m-name').textContent=es&&c.sn?c.sn:c.n;
+    const rar=c.r?(es?(RAR[c.r]||c.r):c.r[0].toUpperCase()+c.r.slice(1)):'';
+    document.getElementById('m-meta').textContent=[c.m,c.t,rar,c.p?'('+c.p+')':''].filter(Boolean).join('  ·  ');
+    document.getElementById('m-oracle').textContent=(es?(c.so||c.o):c.o)||'';
+    dlg.showModal();
+  });
+});
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close();});
+document.getElementById('m-close').addEventListener('click',()=>dlg.close());
+
+    const normal=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+    const search=document.getElementById('search');
+    const color=document.getElementById('color');
+    const cost=document.getElementById('cost');
+    const entries=[...document.querySelectorAll('.inventory-card')];
+    const index=new Map(Object.entries(CARDS).map(([name,c])=>[name,normal([c.n,c.sn,c.o,c.so,c.t].join(' '))]));
+    // Spanish cards print "arrolla" / "vuela"; also accept the familiar ability names.
+    const aliases={arrollar:'trample',arrolla:'trample',volar:'flying',vuela:'flying',vuelo:'flying'};
+    function updateResults(){
+      const words=normal(search.value).trim().split(/\s+/).filter(Boolean).map(w=>aliases[w]||w);
+      let names=0,copies=0;
+      entries.forEach(el=>{
+        const c=CARDS[el.dataset.name];
+        const colorMatch=color.value==='all'||(color.value==='C'?c.colors.length===0:color.value==='multi'?c.colors.length>1:c.colors.includes(color.value));
+        const costMatch=cost.value==='all'||(!c.land&&(cost.value==='10+'?c.mv>=10:c.mv===Number(cost.value)));
+        const match=colorMatch&&costMatch&&words.every(w=>index.get(c.n).includes(w));
+        el.hidden=!match;
+        if(match){names++;copies+=c.remaining;}
+      });
+      document.getElementById('results').textContent=LANG==='es'
+        ?`${names} cartas distintas · ${copies} copias sin usar`
+        :`${names} distinct cards · ${copies} unused copies`;
+      document.getElementById('empty').hidden=names!==0;
+    }
+    search.addEventListener('input',updateResults);
+    color.addEventListener('change',updateResults);
+    cost.addEventListener('change',updateResults);
+    document.getElementById('reset').addEventListener('click',()=>{
+      search.value='';color.value='all';cost.value='all';updateResults();
+    });
+    document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',updateResults));
+    applyLang(LANG);
+    updateResults();
+    </script></body></html>
