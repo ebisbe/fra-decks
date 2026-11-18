@@ -17,7 +17,7 @@ Deck
 1 Fateshaper Aspirant
 1 Prophesied End
 1 Compel Brutality
-1 Murmuring Volume
+1 Greenhouse Propagator
 1 Return to the Light Realms
 8 Plains
 8 Forest

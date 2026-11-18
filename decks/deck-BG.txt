@@ -1,8 +1,7 @@
 Deck
 2 Primal Witchstalker
 1 Hapatra, the Desert Fang
-2 Budding Insurgent
-1 Greenhouse Propagator
+3 Budding Insurgent
 1 Pia, Aether Ascetic
 1 Teyo, Diamondblade Mage
 1 Rank Rat
