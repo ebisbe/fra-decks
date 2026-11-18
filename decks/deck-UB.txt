@@ -1,0 +1,25 @@
+Deck
+1 Mabel, Bitter Recluse
+2 Gallia, Tragic Host
+1 Winter, Tormented Loner
+1 Proft, Sinister Mastermind
+1 Screeching Soulbreaker
+1 Theoretical Necromancer
+1 Void Extrapolator
+1 Hapatra, the Desert Frost
+1 Theorix Metamage
+2 Undulating Witness
+1 Divining Duelist
+1 Silence the Echo
+1 Break Under Pressure
+1 Extended Absence
+1 Vraska's Final Mercy
+1 Rewrite Regrets
+1 Recursive Recruitment
+1 Theorix Charm
+1 Infinite Coursework
+1 Cast Away Doubt
+1 Sphinx's Approach
+8 Island
+7 Swamp
+2 Theorix Annex
